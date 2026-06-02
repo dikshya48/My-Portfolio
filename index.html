@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dikshya Giri — design portfolio.">
+  <title>Dikshya Giri — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sacramento&family=Permanent+Marker&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Global SVG filters -->
+  <svg class="svg-filters" aria-hidden="true">
+    <defs>
+      <filter id="charcoal-rough" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022 0.035" numOctaves="5" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="charcoal-rough-2" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.03 0.024" numOctaves="4" seed="19" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="charcoal-smudge" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+      </filter>
+      <filter id="torn-paper" x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="4" seed="11" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="13" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="torn-paper-2" x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.024 0.017" numOctaves="4" seed="27" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="15" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Background paper texture -->
+  <div class="paper-bg" aria-hidden="true">
+    <div class="paper-bg__base"></div>
+    <div class="paper-bg__mottle"></div>
+    <div class="paper-bg__weave"></div>
+    <div class="paper-bg__fiber"></div>
+    <div class="paper-bg__streaks"></div>
+    <div class="paper-bg__crease paper-bg__crease--1"></div>
+    <div class="paper-bg__crease paper-bg__crease--2"></div>
+    <div class="paper-bg__grid"></div>
+    <div class="paper-bg__grain"></div>
+    <div class="paper-bg__speckle"></div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="site-nav">
+    <a href="#home" class="site-nav__logo">DG</a>
+    <nav class="site-nav__menu" aria-label="Main navigation">
+      <a href="#home">HOME</a>
+      <a href="#experiences">EXPERIENCES</a>
+      <a href="#projects">PROJECTS</a>
+      <!-- <a href="#skills">SKILLS</a> -->
+      <a href="#gallery">GALLERY</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <button class="site-nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero is-intro" id="home">
+      <img class="hero__portrait" src="assets/portrait.png" alt="Portrait of Dikshya Giri" loading="eager">
+      <div class="hero__layout">
+        <div class="hero__text">
+        <p class="hero__eyebrow" aria-label="Portfolio">
+          <span class="hero__eyebrow-text" data-text="Portfolio">Portfolio</span><span class="hero__eyebrow-caret" aria-hidden="true"></span>
+        </p>
+        <div class="hero__title">
+          <span class="hero__ghost" aria-hidden="true">DIKSHYA<br>GIRI</span>
+          <h1 class="hero__name" aria-label="Dikshya Giri">
+            <span class="hero__line">DIKSHYA</span>
+            <span class="hero__line hero__line--indent">GIRI</span>
+          </h1>
+        </div>
+        <svg class="hero__underline" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M 10 26 C 90 14, 180 30, 260 22 C 340 14, 430 30, 510 22 C 550 18, 580 24, 592 22"
+                fill="none" stroke="#1A1A1A" stroke-width="11" stroke-linecap="round" filter="url(#charcoal-rough)"/>
+          <path d="M 16 30 C 120 24, 240 34, 360 28 C 460 23, 540 31, 588 27"
+                fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="hero__lead">
+          <p class="hero__tagline">I don't just wonder "what if?"—I usually end up building it.</p>
+          <p class="hero__desc">I move fast from curiosity to prototypes, learning whatever is needed along the way to make ideas work.</p>
+        </div>
+        <p class="hero__roles" aria-label="machine learning, software engineering, data analytics, project management">
+          <span class="hero__roles-inner">
+            <span class="hero__roles-sizer" aria-hidden="true"><span class="hero__roles-cap">S</span>oftware engineering</span>
+            <span class="hero__roles-live">
+              <span class="hero__roles-text"></span><span class="hero__roles-caret" aria-hidden="true"></span>
+            </span>
+          </span>
+        </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiences -->
+    <section class="section section--experiences" id="experiences">
+      <p class="section__num">01</p>
+      <h2 class="section__title">Experiences</h2>
+
+      <div class="exp-collage">
+        <article class="exp-scrap exp-scrap--left" data-rotate="0">
+          <div class="exp-scrap__paper"></div>
+          <span class="exp-scrap__tape" aria-hidden="true"></span>
+          <div class="exp-scrap__body">
+            <span class="exp-scrap__year">May - Sep 2025</span>
+            <h3 class="exp-scrap__role">ML/AI Research Intern</h3>
+            <p class="exp-scrap__org">CSTEM Labs |  Caldwell University</p>
+            <p class="exp-scrap__desc">Designed an AI-based traffic optimization system using computer vision and predictive modeling to analyze vehicle flow and dynamically adjust signal behavior in simulated environments.</p>
+          </div>
+        </article>
+
+        <article class="exp-scrap exp-scrap--right" data-rotate="0">
+          <div class="exp-scrap__paper"></div>
+          <span class="exp-scrap__tape exp-scrap__tape--alt" aria-hidden="true"></span>
+          <div class="exp-scrap__body">
+            <span class="exp-scrap__year">Feb 2025</span>
+            <h3 class="exp-scrap__role">Project Lead</h3>
+            <p class="exp-scrap__org">HackNYU  |  Google x NYU</p>
+            <p class="exp-scrap__desc"> Developed an assistive wearable system that uses computer vision and sensor fusion to detect obstacles, estimate distance, and provide real-time audio feedback for visually impaired users.</p>
+          </div>
+        </article>
+
+        <article class="exp-scrap exp-scrap--left" data-rotate="0">
+          <div class="exp-scrap__paper"></div>
+          <span class="exp-scrap__tape" aria-hidden="true"></span>
+          <div class="exp-scrap__body">
+            <span class="exp-scrap__year">June - Aug 2024</span>
+            <h3 class="exp-scrap__role">Software Engineer Intern</h3>
+            <p class="exp-scrap__org">Lura Health</p>
+            <p class="exp-scrap__desc">Built software for next-generation healthcare technology, connecting AI-powered insights, patient data, and clinician workflows into tools designed for real-world use.</p>
+          </div>
+        </article>
+
+        <!-- <article class="exp-scrap exp-scrap--right" data-rotate="0">
+          <div class="exp-scrap__paper"></div>
+          <span class="exp-scrap__tape exp-scrap__tape--alt" aria-hidden="true"></span>
+          <div class="exp-scrap__body">
+            <span class="exp-scrap__year">2016 — 2018</span>
+            <h3 class="exp-scrap__role">Design Intern</h3>
+            <p class="exp-scrap__org">Vertex Studio</p>
+            <p class="exp-scrap__desc">First steps in the craft — wireframes, mockups, and a lot of pencil sketches.</p>
+          </div>
+        </article> -->
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section section--projects" id="projects">
+      <p class="section__num">02</p>
+      <h2 class="section__title">Projects</h2>
+
+      <div class="proj-board">
+        <!-- 01 -->
+        <article class="proj-pin proj-pin--tall" data-rotate="0">
+          <div class="proj-pin__card">
+            <span class="proj-pin__tape" aria-hidden="true"></span>
+            <div class="proj-pin__paper"></div>
+            <div class="proj-pin__media">
+              <img src="assets/gamify-work.png" alt="Robotic hand prototype wired to a breadboard on a workbench" class="proj-pin__img" loading="lazy">
+              <span class="proj-pin__no" aria-hidden="true">01</span>
+              <div class="proj-pin__overlay">
+                <h3 class="proj-pin__o-title">Gamify.work()</h3>
+                <p class="proj-pin__o-desc">A gamified robotics platform that turns repetitive industrial tasks into an interactive gaming experience by translating real-time hand gestures into robotic actions.
+                </p>
+                <ul class="proj-pin__tech">
+                  <li>Arduino</li><li>C++</li><li>MediaPipe</li><li>NumPy</li>
+                  <li>OpenCV</li><li>Python</li><li>React</li><li>Sockets</li>
+                  <li>TailwindCSS</li><li>TensorFlow</li><li>Tkinter</li><li>Vite</li>
+                </ul>
+                <a href="https://devpost.com/software/gamify-work-swhulb" class="proj-pin__link" target="_blank" rel="noopener">View project ↗</a>
+              </div>
+            </div>
+            <div class="proj-pin__foot">
+              <h3 class="proj-pin__title">Gamify.work()</h3>
+              <span class="proj-pin__sub">HackNJIT'24</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="proj-pin proj-pin--tall" data-rotate="0">
+          <div class="proj-pin__card">
+            <span class="proj-pin__tape proj-pin__tape--alt" aria-hidden="true"></span>
+            <div class="proj-pin__paper"></div>
+            <div class="proj-pin__media">
+              <img src="assets/concave.png" alt="Concave hackathon demo with laptops, Arduino board, and wiring at Calhacks'25" class="proj-pin__img" loading="lazy">
+              <span class="proj-pin__no" aria-hidden="true">02</span>
+              <div class="proj-pin__overlay">
+                <h3 class="proj-pin__o-title">Concave</h3>
+                <p class="proj-pin__o-desc">A computer vision–powered system that transforms aerial and terrain imagery into real-time robotic navigation paths for autonomous disaster response and precision agriculture.</p>
+                <ul class="proj-pin__tech">
+                  <li>Arduino</li><li>Firebase</li><li>Python</li><li>React</li>
+                </ul>
+                <a href="https://devpost.com/software/team-conclave" class="proj-pin__link" target="_blank" rel="noopener">View project ↗</a>
+              </div>
+            </div>
+            <div class="proj-pin__foot">
+              <h3 class="proj-pin__title">Concave</h3>
+              <span class="proj-pin__sub">Calhacks'25</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 and 04 hidden for now
+        <article class="proj-pin proj-pin--short" data-rotate="0">
+          <div class="proj-pin__card">
+            <span class="proj-pin__tape" aria-hidden="true"></span>
+            <div class="proj-pin__paper"></div>
+            <div class="proj-pin__media">
+              <svg viewBox="0 0 400 260" class="proj-pin__sketch" aria-hidden="true">
+                <rect x="40" y="30" width="320" height="200" fill="none" stroke="currentColor" stroke-width="0.8"/>
+                <rect x="80" y="60" width="100" height="50" fill="none" stroke="currentColor" stroke-width="0.6"/>
+                <rect x="220" y="60" width="100" height="120" fill="none" stroke="currentColor" stroke-width="0.6"/>
+                <line x1="40" y1="150" x2="360" y2="150" stroke="currentColor" stroke-width="0.4" stroke-dasharray="5 5"/>
+              </svg>
+              <span class="proj-pin__no" aria-hidden="true">03</span>
+              <div class="proj-pin__overlay">
+                <h3 class="proj-pin__o-title">Meridian</h3>
+                <p class="proj-pin__o-desc">A data-dense finance dashboard translating complex flows into calm, legible visuals.</p>
+                <ul class="proj-pin__tech">
+                  <li>TypeScript</li><li>D3.js</li><li>Figma</li>
+                </ul>
+                <a href="#" class="proj-pin__link">View project ↗</a>
+              </div>
+            </div>
+            <div class="proj-pin__foot">
+              <h3 class="proj-pin__title">Meridian — Finance Dashboard</h3>
+            </div>
+          </div>
+        </article>
+
+        <article class="proj-pin proj-pin--short" data-rotate="0">
+          <div class="proj-pin__card">
+            <span class="proj-pin__tape proj-pin__tape--alt" aria-hidden="true"></span>
+            <div class="proj-pin__paper"></div>
+            <div class="proj-pin__media">
+              <svg viewBox="0 0 400 260" class="proj-pin__sketch" aria-hidden="true">
+                <polygon points="200,40 320,200 80,200" fill="none" stroke="currentColor" stroke-width="0.8"/>
+                <circle cx="200" cy="150" r="28" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                <line x1="200" y1="40" x2="200" y2="200" stroke="currentColor" stroke-width="0.35" stroke-dasharray="4 6"/>
+              </svg>
+              <span class="proj-pin__no" aria-hidden="true">04</span>
+              <div class="proj-pin__overlay">
+                <h3 class="proj-pin__o-title">Vertex</h3>
+                <p class="proj-pin__o-desc">A scalable component library and token system adopted across four product teams.</p>
+                <ul class="proj-pin__tech">
+                  <li>Storybook</li><li>Figma</li><li>CSS</li>
+                </ul>
+                <a href="#" class="proj-pin__link">View project ↗</a>
+              </div>
+            </div>
+            <div class="proj-pin__foot">
+              <h3 class="proj-pin__title">Vertex — Design System</h3>
+            </div>
+          </div>
+        </article>
+        -->
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <!--
+    <section class="section" id="skills">
+      <p class="section__num">03</p>
+      <h2 class="section__title">Skills</h2>
+      <ul class="skills-list">
+        <li>Product Design</li>
+        <li>Interaction Design</li>
+        <li>Design Systems</li>
+        <li>Prototyping</li>
+        <li>User Research</li>
+        <li>Visual Direction</li>
+        <li>Illustration</li>
+        <li>Branding</li>
+      </ul>
+    </section>
+    -->
+
+    <!-- Gallery / Archive -->
+    <section class="section section--archive" id="gallery">
+      <p class="section__num">04</p>
+      <h2 class="section__title">Gallery</h2>
+      <p class="gallery__sub">when I am not designing solution, you will find me sketching stories.</p>
+
+      <div class="archive">
+        <!-- floating hand-drawn annotation -->
+        <svg class="archive__arrow" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M6 70 C 30 30, 70 18, 110 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M98 8 L112 13 L101 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- 01 · found photograph -->
+        <figure class="artifact artifact--photo" style="--x:3%; --y:4%; --w:288px; --rot:-1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape" aria-hidden="true"></span>
+            <img src="assets/artwork-1.png" alt="Pen-and-wash drawing of an old stone house on a cobbled village street" class="artifact__img artifact__img--color" style="aspect-ratio:1;" loading="lazy">
+            <figcaption class="artifact__cat">fig. 01 · ink &amp; wash</figcaption>
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="stone house: an ancient warmth"></p>
+        </figure>
+
+        <!-- 02 · pencil drawing -->
+        <figure class="artifact artifact--photo artifact--note-left" style="--x:41%; --y:1%; --w:244px; --rot:1.4deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin" aria-hidden="true"></span>
+            <img src="assets/artwork-2.png" alt="Pencil drawing of a child seated on stone steps below a girl standing in an old doorway framed by climbing vines" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="the child: small wonders, big world"></p>
+        </figure>
+
+        <!-- 03 · pencil drawing -->
+        <figure class="artifact artifact--photo artifact--note-left" style="--x:70%; --y:6%; --w:268px; --rot:-1.2deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape artifact__tape--alt" aria-hidden="true"></span>
+            <img src="assets/artwork-3.png" alt="Pencil drawing of a child in a wide straw hat sitting on a weathered wooden stool, seen from behind" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="daydreaming"></p>
+        </figure>
+
+        <!-- 04 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:6%; --y:52%; --w:238px; --rot:1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin artifact__pin--alt" aria-hidden="true"></span>
+            <img src="assets/artwork-4.png" alt="Pencil drawing of small birds perched on an old vine-wrapped bicycle" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="rust turning into life"></p>
+        </figure>
+
+        <!-- 05 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:64%; --y:50%; --w:300px; --rot:1.2deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape" aria-hidden="true"></span>
+            <img src="assets/artwork-5.png" alt="Sketchbook drawing of a curly-haired girl painting at an easel, photographed among yellow flowers" class="artifact__img artifact__img--color" style="aspect-ratio:4/3;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="little painter: capturing what her heart sees"></p>
+        </figure>
+
+        <!-- 06 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:39%; --y:57%; --w:228px; --rot:-1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin" aria-hidden="true"></span>
+            <img src="assets/artwork-6.png" alt="Pencil portrait of Dobby the house elf with large ears and wide eyes" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="dobby: an unforgettable character"></p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section section--contact" id="contact">
+      <p class="section__num">05</p>
+      <h2 class="section__title">Let&rsquo;s Connect and Collaborate</h2>
+      <p class="contact__sub">I am open to ideas, internships &amp; building things that matter</p>
+
+      <div class="contact-stage">
+        <article class="exp-scrap exp-scrap--left contact-scrap">
+          <div class="exp-scrap__paper"></div>
+          <span class="exp-scrap__tape" aria-hidden="true"></span>
+          <span class="exp-scrap__tape exp-scrap__tape--alt contact-scrap__tape-alt" aria-hidden="true"></span>
+          <span class="contact-scrap__pin" aria-hidden="true"></span>
+          <div class="exp-scrap__body">
+            <p class="contact-scrap__eyebrow">reach me here</p>
+            <div class="contact-actions">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dgiri@caldwell.edu" class="contact-action contact-action--link" target="_blank" rel="noopener noreferrer">
+                <span class="contact-action__num">01</span>
+                <span class="contact-action__label">Email</span>
+                <span class="contact-action__cta">
+                  <span class="contact-action__value">dgiri@caldwell.edu</span>
+                  <svg class="contact-action__arrow" viewBox="0 0 28 28" aria-hidden="true">
+                    <path d="M5 21 C 11 15, 14 11, 20 6" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" filter="url(#charcoal-rough-2)"/>
+                    <path d="M14 7 L21 5 L19 12" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" filter="url(#charcoal-rough-2)"/>
+                  </svg>
+                </span>
+              </a>
+              <a href="https://www.linkedin.com/in/dikshyagiri/" class="contact-action contact-action--link" target="_blank" rel="noopener noreferrer">
+                <span class="contact-action__num">02</span>
+                <span class="contact-action__label">LinkedIn</span>
+                <span class="contact-action__cta">
+                  <span class="contact-action__value">dikshyagiri</span>
+                  <svg class="contact-action__arrow" viewBox="0 0 28 28" aria-hidden="true">
+                    <path d="M5 21 C 11 15, 14 11, 20 6" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" filter="url(#charcoal-rough-2)"/>
+                    <path d="M14 7 L21 5 L19 12" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" filter="url(#charcoal-rough-2)"/>
+                  </svg>
+                </span>
+              </a>
+              <a href="https://github.com/dikshya48" class="contact-action contact-action--link" target="_blank" rel="noopener noreferrer">
+                <span class="contact-action__num">03</span>
+                <span class="contact-action__label">GitHub</span>
+                <span class="contact-action__cta">
+                  <span class="contact-action__value">dikshya48</span>
+                  <svg class="contact-action__arrow" viewBox="0 0 28 28" aria-hidden="true">
+                    <path d="M5 21 C 11 15, 14 11, 20 6" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" filter="url(#charcoal-rough-2)"/>
+                    <path d="M14 7 L21 5 L19 12" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" filter="url(#charcoal-rough-2)"/>
+                  </svg>
+                </span>
+              </a>
+              <a href="https://devpost.com/dgiri" class="contact-action contact-action--link" target="_blank" rel="noopener noreferrer">
+                <span class="contact-action__num">04</span>
+                <span class="contact-action__label">Devpost</span>
+                <span class="contact-action__cta">
+                  <span class="contact-action__value">dgiri</span>
+                  <svg class="contact-action__arrow" viewBox="0 0 28 28" aria-hidden="true">
+                    <path d="M5 21 C 11 15, 14 11, 20 6" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" filter="url(#charcoal-rough-2)"/>
+                    <path d="M14 7 L21 5 L19 12" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" filter="url(#charcoal-rough-2)"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Dikshya Giri</span>
+    <span>Drawn with care</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
