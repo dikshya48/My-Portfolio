@@ -1,35 +1,35 @@
-# Sketchbook Portfolio
+# Portfolio - Dikshya Giri
 
-A monochrome design portfolio with an artist sketchbook aesthetic — textured paper, graphite typography, blueprint grids, and charcoal smudges.
+A monochrome, sketchbook-inspired portfolio website with a textured paper aesthetic, graphite typography, blueprint grids, and subtle charcoal-style visuals.
 
-## Quick start
+This project is a fully static, responsive portfolio designed to showcase creative and technical work in a clean, immersive, and artistic format.
 
-**Easiest (Mac):** Double-click `start.command` in Finder. It opens the site in your browser at `http://localhost:8080`.
 
-**Or run in Terminal:**
 
-```bash
-cd /Users/dikshyagiri/Documents/myportfolio
-python3 -m http.server 8080
-```
+## 🌐 Live Site
 
-Then open **http://localhost:8080** in Chrome, Safari, or Firefox.
+https://www.dikshyagiri.com/
 
-> **Note:** Opening `index.html` directly (file://) also works now, but using a local server is recommended.
 
-## Customize
 
-- **Hero title** — Edit the SVG text in `index.html` (`hero__title-svg`)
-- **Projects** — Update work cards in the `#work` section
-- **Contact** — Change the email and social links in `#contact`
-- **Colors** — CSS variables in `css/styles.css` (`:root`)
+## 🚀 Features
 
-## Structure
+- Sketchbook-inspired UI design
+- Minimal monochrome aesthetic
+- Smooth scroll-based interactions
+- Section-based layout (Hero, About, Work, Contact)
+- Fully responsive design (mobile + desktop)
+- No build step required (pure HTML, CSS, JS)
 
-```
-index.html      Main page
-css/styles.css  All styles & textures
-js/main.js      Scroll reveals & nav highlight
-```
 
-No build step required. Fully responsive and static-hosting friendly (Netlify, Vercel, GitHub Pages).
+## ⚙️ Tech Stack
+
+- HTML5
+- CSS3 (custom design system + textures)
+- Vanilla JavaScript
+- Deployed on Vercel
+- Domain managed via Cloudflare
+
+
+
+
