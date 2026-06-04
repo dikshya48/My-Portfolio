@@ -1,35 +1,48 @@
-# Portfolio - Dikshya Giri
+# my portfolio
 
-A monochrome, sketchbook-inspired portfolio website with a textured paper aesthetic, graphite typography, blueprint grids, and subtle charcoal-style visuals.
+this is my personal site — kind of a sketchbook vibe. paper texture, handwritten titles, torn paper cards, that sort of thing.
 
-This project is a fully static, responsive portfolio designed to showcase creative and technical work in a clean, immersive, and artistic format.
+**live:** https://www.dikshyagiri.com/
 
+---
 
+## what's on it
 
-## 🌐 Live Site
+- hero with my name, a short intro, and roles that cycle (ml, swe, data, pm stuff)
+- experiences + projects laid out like scraps pinned to a board
+- a small gallery section
+- contact links at the bottom
 
-https://www.dikshyagiri.com/
+works on phone too. nav turns into a hamburger menu on smaller screens.
 
+---
 
+## how it's built
 
-## 🚀 Features
+plain html / css / js. no react, no build step, no npm.
 
-- Sketchbook-inspired UI design
-- Minimal monochrome aesthetic
-- Smooth scroll-based interactions
-- Section-based layout (Hero, About, Work, Contact)
-- Fully responsive design (mobile + desktop)
-- No build step required (pure HTML, CSS, JS)
+i used gsap for some scroll animations (loaded from a cdn). fonts are from google fonts — dm sans for body text, permanent marker for the big brushy bits, caveat + space mono here and there.
 
+hosted on vercel. domain is on cloudflare.
 
-## ⚙️ Tech Stack
-
-- HTML5
-- CSS3 (custom design system + textures)
-- Vanilla JavaScript
-- Deployed on Vercel
-- Domain managed via Cloudflare
+---
 
 
+---
+
+## files
+
+```
+index.html       → the whole page
+css/styles.css   → all the styling
+js/main.js       → nav, typewriter, scroll stuff
+assets/          → images, favicon, etc.
+```
 
 
+
+
+
+---
+
+© 2026 dikshya giri
