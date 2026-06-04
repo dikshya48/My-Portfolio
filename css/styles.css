@@ -1848,9 +1848,10 @@ body {
   margin: 0 auto;
   padding: 2rem var(--gutter) 3rem;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.1em;
-  color: var(--charcoal-faint);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
 }
 
 /* ---- Mobile nav ---- */
