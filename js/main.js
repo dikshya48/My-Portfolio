@@ -9,61 +9,11 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- Hero intro: typewriter ---- */
+  /* ---- Hero: static content, no intro animation ---- */
   const hero = document.querySelector(".hero");
-  const eyebrowText = document.querySelector(".hero__eyebrow-text");
-  const eyebrowCaret = document.querySelector(".hero__eyebrow-caret");
-
-  const animateHeroContent = () => {
-    if (!hero || reduceMotion || typeof window.gsap === "undefined") return;
-
-    const gsap = window.gsap;
-    gsap.from(".hero__lines", {
-      opacity: 0,
-      y: 10,
-      duration: 0.5,
-      delay: 0.05,
-      ease: "power2.out",
-    });
-    gsap.from(".hero__win", {
-      opacity: 0,
-      y: 14,
-      duration: 0.55,
-      stagger: 0.09,
-      delay: 0.18,
-      ease: "power3.out",
-    });
-  };
-
-  const finishHeroIntro = () => {
-    if (!hero) return;
+  if (hero) {
     hero.classList.remove("is-intro");
     hero.classList.add("is-ready");
-    if (eyebrowText?.dataset.text) eyebrowText.textContent = eyebrowText.dataset.text;
-    if (eyebrowCaret) eyebrowCaret.classList.remove("is-blink");
-    animateHeroContent();
-  };
-
-  if (hero && !reduceMotion && typeof window.gsap !== "undefined") {
-    const gsap = window.gsap;
-    const word = eyebrowText?.dataset.text || "Portfolio";
-    if (eyebrowText) eyebrowText.textContent = "";
-    if (eyebrowCaret) eyebrowCaret.classList.add("is-blink");
-
-    gsap.timeline({ onComplete: finishHeroIntro }).to({}, {
-      duration: word.length * 0.1,
-      ease: "none",
-      onUpdate() {
-        if (!eyebrowText) return;
-        eyebrowText.textContent = word.slice(0, Math.ceil(this.progress() * word.length));
-      },
-      onComplete() {
-        if (eyebrowText) eyebrowText.textContent = word;
-        if (eyebrowCaret) eyebrowCaret.classList.remove("is-blink");
-      },
-    });
-  } else {
-    finishHeroIntro();
   }
 
   /* ---- Scroll reveal ---- */
