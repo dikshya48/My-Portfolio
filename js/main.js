@@ -13,90 +13,26 @@
   const hero = document.querySelector(".hero");
   const eyebrowText = document.querySelector(".hero__eyebrow-text");
   const eyebrowCaret = document.querySelector(".hero__eyebrow-caret");
-  const rolesText = document.querySelector(".hero__roles-text");
-  const rolesCaret = document.querySelector(".hero__roles-caret");
 
-  const ROLES = [
-    "machine learning",
-    "software engineering",
-    "data analytics",
-    "project management",
-  ];
-
-  const capitalizeRole = (phrase) =>
-    phrase.charAt(0).toUpperCase() + phrase.slice(1);
-
-  const renderRoleText = (phrase, length) => {
-    if (length <= 0) return "";
-    const visible = phrase.slice(0, length);
-    const first = visible.charAt(0);
-    const rest = visible.slice(1);
-    return rest
-      ? `<span class="hero__roles-cap">${first}</span>${rest}`
-      : `<span class="hero__roles-cap">${first}</span>`;
-  };
-
-  const startRolesTypewriter = () => {
-    if (!rolesText) return;
-
-    if (reduceMotion || typeof window.gsap === "undefined") {
-      rolesText.innerHTML = renderRoleText(capitalizeRole(ROLES[0]), ROLES[0].length);
-      if (rolesCaret) rolesCaret.style.opacity = "0";
-      return;
-    }
+  const animateHeroContent = () => {
+    if (!hero || reduceMotion || typeof window.gsap === "undefined") return;
 
     const gsap = window.gsap;
-    let index = 0;
-
-    const blinkRolesCaretOnce = () => {
-      if (!rolesCaret) return;
-      rolesCaret.classList.remove("is-blink-once");
-      void rolesCaret.offsetWidth;
-      rolesCaret.classList.add("is-blink-once");
-    };
-
-    const runCycle = () => {
-      const phrase = capitalizeRole(ROLES[index]);
-
-      gsap.timeline({
-        onComplete() {
-          index = (index + 1) % ROLES.length;
-          runCycle();
-        },
-      })
-        .to({}, {
-          duration: phrase.length * 0.07,
-          ease: "none",
-          onStart() {
-            if (rolesCaret) {
-              rolesCaret.classList.remove("is-blink-once");
-              rolesCaret.style.opacity = "0.75";
-            }
-          },
-          onUpdate() {
-            const length = Math.ceil(this.progress() * phrase.length);
-            rolesText.innerHTML = renderRoleText(phrase, length);
-          },
-        })
-        .to({}, {
-          duration: 0.75,
-          onStart: blinkRolesCaretOnce,
-        })
-        .to({}, {
-          duration: phrase.length * 0.045,
-          ease: "none",
-          onStart() {
-            if (rolesCaret) rolesCaret.classList.remove("is-blink-once");
-          },
-          onUpdate() {
-            const remaining = Math.max(0, Math.floor((1 - this.progress()) * phrase.length));
-            rolesText.innerHTML = renderRoleText(phrase, remaining);
-          },
-        })
-        .to({}, { duration: 0.35 });
-    };
-
-    runCycle();
+    gsap.from(".hero__lines", {
+      opacity: 0,
+      y: 10,
+      duration: 0.5,
+      delay: 0.05,
+      ease: "power2.out",
+    });
+    gsap.from(".hero__win", {
+      opacity: 0,
+      y: 14,
+      duration: 0.55,
+      stagger: 0.09,
+      delay: 0.18,
+      ease: "power3.out",
+    });
   };
 
   const finishHeroIntro = () => {
@@ -105,7 +41,7 @@
     hero.classList.add("is-ready");
     if (eyebrowText?.dataset.text) eyebrowText.textContent = eyebrowText.dataset.text;
     if (eyebrowCaret) eyebrowCaret.classList.remove("is-blink");
-    startRolesTypewriter();
+    animateHeroContent();
   };
 
   if (hero && !reduceMotion && typeof window.gsap !== "undefined") {
