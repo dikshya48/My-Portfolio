@@ -49,6 +49,12 @@ body {
   padding-right: env(safe-area-inset-right, 0px);
 }
 
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 .svg-filters {
   position: absolute;
   width: 0;
@@ -387,6 +393,7 @@ body {
 .hero__text {
   position: relative;
   z-index: 2;
+  width: 100%;
   transform: none;
   max-width: 100%;
   min-width: 0;
@@ -443,6 +450,16 @@ body {
   .hero__portrait {
     max-width: min(50vw, 500px);
   }
+
+  .exp-scrap--left,
+  .exp-scrap--right {
+    margin-left: clamp(0rem, 2vw, 1.25rem);
+    margin-right: clamp(0rem, 2vw, 1.25rem);
+  }
+
+  .archive {
+    min-height: clamp(520px, 72vw, 860px);
+  }
 }
 
 @media (max-width: 900px) {
@@ -485,6 +502,15 @@ body {
       rgba(0, 0, 0, 0.28) 74%,
       transparent 92%
     );
+  }
+
+  .hero__role,
+  .hero__eyebrow {
+    max-width: 100%;
+  }
+
+  .hero__skills {
+    gap: 0.35rem;
   }
 }
 
@@ -542,6 +568,28 @@ body {
   .hero__text {
     transform: none;
     padding-bottom: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .hero__title,
+  .hero__lines,
+  .hero__wins,
+  .hero__actions {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .hero__wins::before {
+    left: -6%;
+    right: -6%;
+  }
+
+  .hero__win {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .hero__actions {
+    margin-top: clamp(2.25rem, 5vw, 3rem);
   }
 }
 
@@ -672,6 +720,7 @@ body {
 /* Three lines below name — role, niche, headline */
 .hero__lines {
   margin: clamp(0.75rem, 1.5vw, 1.1rem) 0 0;
+  margin-left: clamp(0.75rem, 2.5vw, 1.35rem);
   padding: 0;
   max-width: min(560px, 100%);
   transform: none;
@@ -725,6 +774,7 @@ body {
   align-items: center;
   gap: clamp(0.65rem, 1.35vw, 0.9rem);
   margin-top: clamp(3.15rem, 5.75vw, 4rem);
+  margin-left: clamp(0.75rem, 2.5vw, 1.35rem);
   max-width: min(580px, 100%);
 }
 
@@ -787,6 +837,7 @@ body {
   flex-direction: column;
   gap: clamp(0.35rem, 0.75vw, 0.5rem);
   margin-top: clamp(2.5rem, 4.5vw, 3.25rem);
+  margin-left: clamp(0.75rem, 2.5vw, 1.35rem);
   max-width: min(580px, 100%);
   isolation: isolate;
 }
@@ -884,6 +935,7 @@ body {
   flex-direction: column;
   gap: 0.2rem;
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .hero__win-place,
@@ -1893,6 +1945,36 @@ body {
   .proj-board {
     column-count: 1;
   }
+
+  .exp-scrap {
+    width: 100%;
+  }
+
+  .exp-scrap--left,
+  .exp-scrap--right {
+    align-self: stretch;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .gallery__sub,
+  .contact__sub {
+    margin-top: 0;
+    line-height: 1.25;
+    max-width: 100%;
+  }
+
+  .archive {
+    min-height: clamp(460px, 68vw, 700px);
+  }
+
+  .contact-scrap {
+    width: 100%;
+  }
+
+  .section__title {
+    transform: rotate(-0.5deg);
+  }
 }
 
 /* ---- Contact ---- */
@@ -2237,9 +2319,18 @@ body {
   }
 
   .hero__btn {
-    min-height: 1.95rem;
-    padding: 0.38rem 0.75rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.9rem;
     font-size: clamp(0.6875rem, 2.5vw, 0.75rem);
+  }
+
+  .hero__win-place,
+  .hero__win-meta {
+    font-size: clamp(0.8125rem, 3.4vw, 0.9rem);
+  }
+
+  .section__num {
+    font-size: 0.75rem;
   }
 
   .hero__portrait {
@@ -2258,6 +2349,21 @@ body {
     text-align: center;
     gap: 0.35rem;
     padding-bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .artifact {
+    width: min(280px, 94%);
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-nav__logo {
+    font-size: 1.35rem;
   }
 }
 
