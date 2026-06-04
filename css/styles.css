@@ -595,13 +595,15 @@ body {
 
 .hero__underline,
 .hero__lines,
-.hero__wins {
+.hero__wins,
+.hero__actions {
   position: relative;
   z-index: 5;
 }
 
 .hero__lines,
-.hero__wins {
+.hero__wins,
+.hero__actions {
   transform: translateZ(0);
 }
 
@@ -744,105 +746,132 @@ body {
   margin: clamp(0.85rem, 1.6vw, 1.15rem) 0 0;
 }
 
-/* Wins — torn paper scraps (matches experiences) */
-.hero__wins {
+/* Hero CTAs */
+.hero__actions {
   display: flex;
-  flex-direction: column;
-  gap: clamp(0.65rem, 1.35vw, 0.85rem);
-  margin-top: clamp(1.85rem, 3.5vw, 2.35rem);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(0.65rem, 1.35vw, 0.9rem);
+  margin-top: clamp(2.1rem, 4vw, 2.75rem);
   max-width: min(580px, 100%);
 }
 
-.hero__win {
+.hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.1rem;
+  padding: 0.42rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.15vw, 0.8125rem);
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  line-height: 1.2;
+  color: var(--paper-light);
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--graphite);
+  border: 1.5px solid var(--graphite);
+  border-radius: 5px;
+  box-shadow: 0 2px 0 rgba(20, 16, 10, 0.4);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.hero__btn:hover,
+.hero__btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 rgba(20, 16, 10, 0.45);
+  outline: 2px solid rgba(33, 28, 20, 0.35);
+  outline-offset: 2px;
+}
+
+.hero__btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(20, 16, 10, 0.35);
+}
+
+.hero__btn--secondary {
+  color: var(--graphite);
+  background: var(--paper-light);
+  border-color: var(--graphite);
+  box-shadow: 0 3px 0 rgba(20, 16, 10, 0.2);
+}
+
+.hero__btn--secondary:hover,
+.hero__btn--secondary:focus-visible {
+  background: #fffdf8;
+}
+
+/* Wins — soft atmospheric fade (no box) */
+.hero__wins {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.35rem, 0.75vw, 0.5rem);
+  margin-top: clamp(1.85rem, 3.5vw, 2.35rem);
+  max-width: min(580px, 100%);
+  isolation: isolate;
+}
+
+.hero__wins::before {
+  content: "";
+  position: absolute;
+  top: -14%;
+  bottom: -14%;
+  left: -20%;
+  right: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 82% 118% at 50% 50%,
+    rgba(245, 238, 226, 0.48) 0%,
+    rgba(242, 234, 218, 0.3) 30%,
+    rgba(233, 224, 206, 0.13) 52%,
+    rgba(233, 224, 206, 0.04) 68%,
+    transparent 82%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 7%,
+    rgba(0, 0, 0, 0.88) 18%,
+    #000 30%,
+    #000 72%,
+    rgba(0, 0, 0, 0.88) 84%,
+    rgba(0, 0, 0, 0.4) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 7%,
+    rgba(0, 0, 0, 0.88) 18%,
+    #000 30%,
+    #000 72%,
+    rgba(0, 0, 0, 0.88) 84%,
+    rgba(0, 0, 0, 0.4) 93%,
+    transparent 100%
+  );
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.hero__win {
   display: flex;
   align-items: center;
   gap: clamp(0.6rem, 1.5vw, 0.8rem);
-  padding: clamp(0.75rem, 1.6vw, 0.95rem) clamp(1rem, 2.1vw, 1.35rem);
-  isolation: isolate;
-  transform: rotate(-0.35deg);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: clamp(0.45rem, 1vw, 0.55rem) 0;
+  border-bottom: 1px solid rgba(33, 28, 20, 0.08);
 }
 
-.hero__win--alt {
-  transform: rotate(0.4deg);
-}
-
-.hero__win:nth-child(3) {
-  transform: rotate(0.25deg);
-}
-
-.hero__win:nth-child(4).hero__win--alt {
-  transform: rotate(-0.5deg);
-}
-
-.hero__win-paper {
-  position: absolute;
-  inset: -3px -6px -4px -4px;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(80, 60, 30, 0.1) 100%),
-    radial-gradient(ellipse 30% 26% at 12% 88%, rgba(110, 80, 40, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 24% 22% at 88% 14%, rgba(110, 80, 40, 0.08) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.15 0 0 0 0 0.11 0 0 0 0 0.05 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.16'/%3E%3C/svg%3E"),
-    #E6D5B6;
-  background-size: auto, auto, auto, 160px 160px, auto;
-  filter: url(#torn-paper) drop-shadow(2px 5px 8px rgba(26, 20, 12, 0.13));
-}
-
-.hero__win--alt .hero__win-paper {
-  filter: url(#torn-paper-2) drop-shadow(-2px 5px 8px rgba(26, 20, 12, 0.13));
-}
-
-.hero__win-paper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      transparent 25px,
-      rgba(26, 20, 12, 0.04) 25px,
-      rgba(26, 20, 12, 0.04) 26px
-    );
-  opacity: 0.6;
-}
-
-.hero__win-paper::after {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  bottom: -5px;
-  height: 10px;
-  background: radial-gradient(ellipse, rgba(26, 20, 12, 0.12) 0%, transparent 72%);
-  filter: blur(3px);
-  opacity: 0.85;
-}
-
-.hero__win:hover {
-  transform: translateY(-3px) rotate(-0.35deg);
-}
-
-.hero__win--alt:hover,
-.hero__win.hero__win--alt:hover {
-  transform: translateY(-3px) rotate(0.4deg);
-}
-
-.hero__win:nth-child(3):hover {
-  transform: translateY(-3px) rotate(0.25deg);
-}
-
-.hero__win:nth-child(4).hero__win--alt:hover {
-  transform: translateY(-3px) rotate(-0.5deg);
-}
-
-.hero__win-medal,
-.hero__win-body {
-  position: relative;
-  z-index: 1;
+.hero__win:last-child {
+  border-bottom: none;
 }
 
 .hero__win-medal {
@@ -879,6 +908,7 @@ body {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.35;
+  color: var(--graphite);
 }
 
 .hero__win-meta strong,
@@ -2200,8 +2230,15 @@ body {
     letter-spacing: 0.1em;
   }
 
-  .hero__win {
-    padding: 0.55rem 0.75rem;
+  .hero__actions {
+    gap: 0.5rem;
+    margin-top: clamp(1.85rem, 5vw, 2.35rem);
+  }
+
+  .hero__btn {
+    min-height: 1.95rem;
+    padding: 0.38rem 0.75rem;
+    font-size: clamp(0.6875rem, 2.5vw, 0.75rem);
   }
 
   .hero__portrait {
