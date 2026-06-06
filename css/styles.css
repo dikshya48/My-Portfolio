@@ -17,7 +17,7 @@
   --font-script: "Caveat", cursive;
   --font-brush: "Permanent Marker", "Brush Script MT", cursive;
   --maxw: 1200px;
-  --gutter: clamp(0.875rem, 2.5vw, 4.5rem);
+  --gutter: clamp(1rem, 4vw, 4rem);
   /* Fluid scale: smaller on phones, larger on wide desktops */
   --fs-root: clamp(0.8125rem, 0.7rem + 0.45vw, 1.1875rem);
   --fs-hero-name: clamp(1.4rem, 0.55rem + 3.2vw, 4.5rem);
@@ -55,8 +55,6 @@ html {
 
 @media (min-width: 1400px) {
   :root {
-    --maxw: 1360px;
-    --gutter: clamp(1.25rem, 3.5vw, 5rem);
     --content-max: clamp(560px, 40vw, 920px);
     --portrait-max: clamp(420px, 40vw, 960px);
     --fs-exp-desc: clamp(1.0625rem, 0.9rem + 0.28vw, 1.375rem);
@@ -76,15 +74,8 @@ html {
 
 @media (min-width: 1680px) and (min-height: 900px) {
   :root {
-    --maxw: 1520px;
     --fs-hero-name: clamp(2.75rem, 1rem + 3.5vw, 5rem);
     --fs-section-title: clamp(2.25rem, 0.75rem + 2.8vw, 4.25rem);
-  }
-}
-
-@media (min-width: 1920px) {
-  :root {
-    --maxw: 1680px;
   }
 }
 
@@ -1050,7 +1041,8 @@ main {
 .section {
   width: 100%;
   max-width: var(--maxw);
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   padding: clamp(3.5rem, 9vw, 7rem) var(--gutter);
   border-top: 1px solid var(--line);
   scroll-margin-top: 6rem;
@@ -1924,7 +1916,7 @@ main {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .proj-board {
     column-count: 1;
   }
@@ -1982,7 +1974,13 @@ main {
 .contact-scrap {
   width: min(820px, 96%);
   margin-top: 0;
+  margin-inline: auto;
   padding: clamp(2rem, 4vw, 2.85rem) clamp(2rem, 4.5vw, 3.25rem);
+}
+
+.section--contact .contact-scrap.exp-scrap--left {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contact-scrap__tape-alt {
@@ -2186,7 +2184,8 @@ main {
   gap: 0.5rem;
   width: 100%;
   max-width: var(--maxw);
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
   padding: 2rem var(--gutter) 3rem;
   font-family: var(--font-mono);

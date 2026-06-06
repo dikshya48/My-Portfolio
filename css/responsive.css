@@ -15,6 +15,35 @@
   }
 }
 
+/* ---- Post-hero sections: centered 1200px canvas with side gutters ---- */
+main > .section {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .exp-scrap {
+    width: min(920px, 96%);
+  }
+
+  .exp-scrap--left {
+    align-self: flex-start;
+    margin-left: clamp(0rem, 3vw, 2.5rem);
+    margin-right: auto;
+  }
+
+  .exp-scrap--right {
+    align-self: flex-end;
+    margin-right: clamp(0rem, 3vw, 2.5rem);
+    margin-left: auto;
+  }
+}
+
 /* ---- Laptop+ (1024px): desktop nav + viewport-fit hero ---- */
 @media (min-width: 1024px) {
   :root {
@@ -452,17 +481,6 @@
     white-space: normal;
   }
 
-  .exp-scrap {
-    width: 100%;
-  }
-
-  .exp-scrap--left,
-  .exp-scrap--right {
-    align-self: stretch;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
   .gallery__sub,
   .contact__sub {
     margin-top: 0;
@@ -470,12 +488,14 @@
     max-width: 100%;
   }
 
-  .contact-scrap {
-    width: 100%;
-  }
-
   .section__title {
     transform: rotate(-0.5deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-scrap {
+    width: 100%;
   }
 }
 
@@ -606,16 +626,7 @@
 /* ---- Large desktop (1440px+) ---- */
 @media (min-width: 1440px) {
   :root {
-    --gutter: clamp(1.5rem, 3vw, 5.5rem);
-  }
-
-  .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 44vw);
-  }
-
-  .section {
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
+    --gutter: clamp(1rem, 4vw, 4rem);
   }
 }
 
@@ -623,19 +634,6 @@
   :root {
     --fs-hero-name: clamp(2.75rem, 1.2rem + 3.2vw + 0.5vh, 4.75rem);
     --portrait-max: clamp(280px, 26vw, 640px);
-  }
-}
-
-/* ---- 4K / ultra-wide: cap line length, center canvas ---- */
-@media (min-width: 1920px) and (min-height: 900px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 42vw);
-  }
-}
-
-@media (min-width: 2560px) {
-  :root {
-    --maxw: min(1680px, 72vw);
   }
 }
 
