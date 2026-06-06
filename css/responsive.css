@@ -88,7 +88,7 @@ main > .section {
     height: var(--hero-block-h);
     padding-top: clamp(0.35rem, 0.9vh, 0.75rem);
     padding-bottom: clamp(0.35rem, 0.9vh, 0.75rem);
-    padding-left: var(--nav-align);
+    padding-left: max(calc(var(--gutter) + clamp(0.85rem, 2vw, 1.85rem)), env(safe-area-inset-left, 0px));
     padding-right: 0;
     gap: 0;
     overflow: clip;
@@ -98,13 +98,14 @@ main > .section {
     grid-column: 1;
     grid-row: 1;
     align-self: stretch;
-    justify-self: stretch;
+    justify-self: start;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
     max-width: 100%;
     min-width: 0;
+    margin: 0;
     height: 100%;
     max-height: 100%;
     padding: 0;
@@ -120,21 +121,25 @@ main > .section {
     padding-bottom: 0;
   }
 
+  .hero__eyebrow,
   .hero__title,
   .hero__lines,
   .hero__wins,
   .hero__actions {
-    margin-left: clamp(0.35rem, 1vw, 0.65rem);
+    margin-left: clamp(0.5rem, 1.15vw, 1.05rem);
   }
 
   .hero__eyebrow {
-    margin-left: clamp(0.35rem, 1vw, 0.65rem);
     margin-top: clamp(3.25rem, 7vh, 4.75rem);
   }
 
   .hero__title {
     margin-top: clamp(0.35rem, 0.9vh, 0.65rem);
     padding-bottom: clamp(0.45rem, 1.1vh, 0.9rem);
+  }
+
+  .hero__line--indent {
+    margin-left: clamp(0.85rem, 3vw, 1.85rem);
   }
 
   .hero__lines {
@@ -186,7 +191,7 @@ main > .section {
   .hero__actions {
     flex: 0 0 auto;
     margin-top: 0;
-    margin-bottom: clamp(0.25rem, 0.65vh, 0.5rem);
+    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
     padding-top: 0;
     flex-shrink: 0;
     max-width: 100%;
@@ -297,7 +302,7 @@ main > .section {
     height: var(--hero-block-h);
     padding-top: clamp(0.35rem, 0.9vh, 0.75rem);
     padding-bottom: clamp(0.35rem, 0.9vh, 0.75rem);
-    padding-left: var(--nav-align);
+    padding-left: max(calc(var(--gutter) + clamp(0.85rem, 2vw, 1.85rem)), env(safe-area-inset-left, 0px));
     padding-right: 0;
     overflow: clip;
   }
@@ -306,10 +311,12 @@ main > .section {
     grid-column: 1;
     grid-row: 1;
     align-self: stretch;
+    justify-self: start;
     height: 100%;
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    margin: 0;
     padding-bottom: 0;
   }
 
@@ -318,18 +325,22 @@ main > .section {
     min-height: 0;
   }
 
+  .hero__eyebrow,
   .hero__title,
   .hero__lines,
   .hero__wins,
-  .hero__actions,
-  .hero__eyebrow {
-    margin-left: clamp(0.35rem, 1vw, 0.65rem);
+  .hero__actions {
+    margin-left: clamp(0.5rem, 1.15vw, 1.05rem);
+  }
+
+  .hero__line--indent {
+    margin-left: clamp(0.85rem, 3vw, 1.85rem);
   }
 
   .hero__actions {
     flex: 0 0 auto;
     margin-top: 0;
-    margin-bottom: clamp(0.25rem, 0.65vh, 0.5rem);
+    margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
   }
 
   .hero__title {
@@ -518,9 +529,18 @@ main > .section {
     order: 1;
     width: 100%;
     max-width: 100%;
+    margin: 0;
     padding-bottom: clamp(0.75rem, 2vw, 1.25rem);
     display: flex;
     flex-direction: column;
+  }
+
+  .hero__eyebrow,
+  .hero__title,
+  .hero__lines,
+  .hero__wins,
+  .hero__actions {
+    margin-left: clamp(0.5rem, 1.15vw, 1.05rem);
   }
 
   .hero__wins {

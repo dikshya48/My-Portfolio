@@ -455,7 +455,7 @@ main {
     clamp(3rem, 9vh, 5.5rem)
     var(--gutter)
     clamp(3.5rem, 10vw, 6.5rem)
-    var(--nav-align);
+    max(calc(var(--gutter) + clamp(0.85rem, 2vw, 1.85rem)), env(safe-area-inset-left, 0px));
   scroll-margin-top: 6rem;
   overflow: visible;
   border-bottom: 1px solid var(--line);
