@@ -1,7 +1,3 @@
-/* =============================================
-   Responsive layer — mobile-first enhancements
-   Breakpoints: 320 · 768 · 1024 · 1440 · 1920+
-   ============================================= */
 
 :root {
   --touch-min: 2.75rem;
@@ -196,6 +192,7 @@ main > .section {
     flex-shrink: 0;
     max-width: 100%;
   }
+   
 
   .hero__btn {
     min-height: clamp(2rem, 1.65rem + 0.9vh, 2.35rem);
