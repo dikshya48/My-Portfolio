@@ -28,6 +28,7 @@
   --fs-hero-skill: clamp(0.625rem, 0.55rem + 0.22vw, 0.875rem);
   --fs-hero-win: clamp(0.75rem, 0.7rem + 0.18vw, 1rem);
   --fs-nav-logo: clamp(1.25rem, 0.85rem + 0.85vw, 2.125rem);
+   
   --fs-nav-link: clamp(0.6875rem, 0.6rem + 0.32vw, 0.9375rem);
   --fs-exp-role: clamp(1.0625rem, 0.9rem + 0.6vw, 1.625rem);
   --fs-exp-desc: clamp(0.9375rem, 0.875rem + 0.22vw, 1.25rem);
