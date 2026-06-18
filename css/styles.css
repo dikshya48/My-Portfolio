@@ -78,6 +78,7 @@ html {
   :root {
     --fs-hero-name: clamp(2.75rem, 1rem + 3.5vw, 5rem);
     --fs-section-title: clamp(2.25rem, 0.75rem + 2.8vw, 4.25rem);
+     
   }
 }
 
