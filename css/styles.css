@@ -18,6 +18,7 @@
   --font-brush: "Permanent Marker", "Brush Script MT", cursive;
   --maxw: 1200px;
   --gutter: clamp(1rem, 4vw, 4rem);
+   
   /* Fluid scale: smaller on phones, larger on wide desktops */
   --fs-root: clamp(0.8125rem, 0.7rem + 0.45vw, 1.1875rem);
   --fs-hero-name: clamp(1.4rem, 0.55rem + 3.2vw, 4.5rem);
