@@ -407,11 +407,12 @@ main {
 .site-nav__menu a::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 1.5px;
-  background: var(--graphite);
+  left: -2px;
+  right: -2px;
+  bottom: -7px;
+  width: auto;
+  height: 5px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='6' viewBox='0 0 90 6'%3E%3Cpath d='M1 4 C 18 2, 38 5.2, 58 3 S 84 4.2, 89 2.8' stroke='%23211C14' stroke-width='1.7' fill='none' stroke-linecap='round' opacity='0.85'/%3E%3Cpath d='M3 5 C 26 3.6, 50 5.6, 87 4' stroke='%23211C14' stroke-width='0.9' fill='none' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E") left center / 100% 100% no-repeat;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.25s ease;
@@ -512,6 +513,10 @@ main {
   flex-shrink: 0;
   filter: grayscale(1) brightness(1.07) contrast(0.94);
   mix-blend-mode: multiply;
+}
+
+/* soft dissolve into paper now lives on the inner sketch svg */
+svg.sketchpad__art {
   -webkit-mask-image: radial-gradient(
     ellipse 90% 105% at 84% 48%,
     #000 28%,
@@ -1246,16 +1251,17 @@ main {
 
 /* ---- Projects — pinned sketchbook board ---- */
 .proj-board {
-  column-count: 2;
-  column-gap: clamp(1.5rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
   margin-top: 0.5rem;
 }
 
 .proj-pin {
   display: block;
   width: 100%;
-  break-inside: avoid;
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 0;
   will-change: transform, opacity;
 }
 
@@ -1551,7 +1557,7 @@ main {
 
 @media (max-width: 640px) {
   .proj-board {
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 
   .proj-pin--tall,
@@ -1930,7 +1936,7 @@ main {
 
 @media (max-width: 767px) {
   .proj-board {
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 
   .exp-scrap {
@@ -2271,22 +2277,423 @@ body.nav-open {
   overflow: hidden;
 }
 
-/* ---- Scroll reveal ---- */
+/* ---- Scroll reveal: sections sketched in left-to-right ---- */
 .js .reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 1;
 }
 
-.js .reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    -webkit-mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
+    mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
+    -webkit-mask-size: 260% 100%;
+    mask-size: 260% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+    transition: -webkit-mask-position 0.85s cubic-bezier(0.4, 0, 0.2, 1), mask-position 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .js .reveal.is-visible {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+
+  /* mask dropped after the sweep so scrolling stays cheap */
+  .js .reveal.is-inked {
+    -webkit-mask-image: none;
+    mask-image: none;
+    transition: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .proj-card:hover .proj-card__frame { transform: none; }
+}
+
+/* =============================================
+   Hero sketchpad — the portrait drawn in pencil
+   ============================================= */
+.hero__sketchpad {
+  width: min(88vw, var(--portrait-max));
+  aspect-ratio: 726 / 912;
+  pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 480px) {
+  .hero__sketchpad {
+    width: min(68vw, var(--portrait-max));
+  }
+}
+
+svg.sketchpad__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* hatch strokes inside the reveal masks (built by JS) */
+.hero__sketchpad.is-drawing .hatch-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: hatch-draw var(--hdur, 0.5s) cubic-bezier(0.45, 0.05, 0.55, 0.95) both;
+  animation-delay: var(--hd, 0s);
+}
+
+@keyframes hatch-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* construction guides — visible only while drawing, then erased */
+.sketchpad__guides {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sketchpad__guides path {
+  fill: none;
+  stroke: #2b2418;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.hero__sketchpad.is-drawing .sketchpad__guides {
+  animation: guides-life 4.2s ease both;
+}
+
+.hero__sketchpad.is-drawing .sketchpad__guides path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: guide-draw 0.6s ease-out both;
+  animation-delay: calc(var(--gd, 0) * 1s + 0.1s);
+}
+
+@keyframes guide-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes guides-life {
+  0% { opacity: 0; }
+  6% { opacity: 0.55; }
+  55% { opacity: 0.5; }
+  88% { opacity: 0.12; }
+  100% { opacity: 0; }
+}
+
+/* the travelling pencil */
+.sketchpad__pencil {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sketchpad__pencil-art {
+  filter: drop-shadow(2px 3px 2px rgba(26, 20, 12, 0.28));
+}
+
+.hero__sketchpad.is-drawing .sketchpad__pencil {
+  animation: pencil-life 4.2s linear both;
+}
+
+@keyframes pencil-life {
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  93% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* blank paper state while the intro waits to start drawing */
+.hero__sketchpad.is-blank .hatch-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.hero__sketchpad.is-blank .sketchpad__guides,
+.hero__sketchpad.is-blank .sketchpad__hover-lines {
+  opacity: 0;
+}
+
+.hero__eyebrow-text {
+  display: inline-block;
+}
+
+/* =============================================
+   First-visit intro — the page draws itself once
+   ============================================= */
+.intro-pending .site-nav__logo,
+.intro-pending .site-nav__menu a,
+.intro-pending .site-nav__toggle,
+.intro-pending .hero__line,
+.intro-pending .hero__ghost,
+.intro-pending .hero__eyebrow-text,
+.intro-pending .hero__lines,
+.intro-pending .hero__wins,
+.intro-pending .hero__actions,
+.intro-pending .hero__sketchpad {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro-play .hero__lines,
+  .intro-play .hero__sketchpad {
+    opacity: 1;
+  }
+
+  /* handwriting: logo, then the name, line by line */
+  .intro-play .site-nav__logo {
+    animation: write-in 0.55s ease-in-out 0.05s both;
+  }
+
+  .intro-play .hero__line:first-child {
+    animation: write-in 0.6s ease-in-out 0.4s both;
+  }
+
+  .intro-play .hero__line--indent {
+    animation: write-in 0.5s ease-in-out 0.95s both;
+  }
+
+  .intro-play .hero__ghost {
+    animation: ghost-in 0.8s ease 1.35s both;
+  }
+
+  /* supporting content shaded in with a pencil sweep */
+  .intro-play .hero__eyebrow-text,
+  .intro-play .hero__role,
+  .intro-play .hero__skill,
+  .intro-play .hero__wins,
+  .intro-play .hero__actions,
+  .intro-play .site-nav__menu a,
+  .intro-play .site-nav__toggle {
+    -webkit-mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
+    mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
+    -webkit-mask-size: 260% 100%;
+    mask-size: 260% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    animation: pencil-shade 0.75s ease both;
+  }
+
+  .intro-play .hero__eyebrow-text { animation-delay: 1.45s; }
+  .intro-play .hero__role { animation-delay: 4.35s; }
+  .intro-play .hero__skill:nth-child(1) { animation-delay: 4.55s; }
+  .intro-play .hero__skill:nth-child(2) { animation-delay: 4.7s; }
+  .intro-play .hero__skill:nth-child(3) { animation-delay: 4.85s; }
+  .intro-play .hero__wins { animation-delay: 4.9s; animation-duration: 1s; }
+  .intro-play .hero__actions { animation-delay: 5.3s; }
+  .intro-play .site-nav__toggle { animation-delay: 5.5s; }
+  .intro-play .site-nav__menu a:nth-child(1) { animation-delay: 5.5s; }
+  .intro-play .site-nav__menu a:nth-child(2) { animation-delay: 5.58s; }
+  .intro-play .site-nav__menu a:nth-child(3) { animation-delay: 5.66s; }
+  .intro-play .site-nav__menu a:nth-child(4) { animation-delay: 5.74s; }
+  .intro-play .site-nav__menu a:nth-child(5) { animation-delay: 5.82s; }
+}
+
+/* after the intro: strip masks/animations so the page runs clean */
+.intro-done .site-nav__logo,
+.intro-done .hero__line,
+.intro-done .hero__ghost {
+  animation: none;
+  clip-path: none;
+}
+
+.intro-done .hero__eyebrow-text,
+.intro-done .hero__role,
+.intro-done .hero__skill,
+.intro-done .hero__wins,
+.intro-done .hero__actions,
+.intro-done .site-nav__menu a,
+.intro-done .site-nav__toggle {
+  animation: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@keyframes write-in {
+  from { opacity: 1; clip-path: inset(-14% 103% -14% -3%); }
+  to { opacity: 1; clip-path: inset(-14% -3% -14% -3%); }
+}
+
+@keyframes ghost-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pencil-shade {
+  from {
+    opacity: 1;
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    opacity: 1;
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+}
+
+/* =============================================
+   Pencil cursor & hover sketch marks
+   ============================================= */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g transform='scale(1.308)'><path d='M2.5 23.5 L4.2 18.9 L7.1 21.8 Z' fill='%23241d13'/><path d='M4.2 18.9 L7.1 21.8 L18.3 10.6 L14.4 6.7 Z' fill='%23c9a15e' stroke='%23241d13' stroke-width='0.8'/><path d='M6.5 19.5 L16.4 9.6' stroke='%23a9834a' stroke-width='1.3'/><path d='M14.4 6.7 L18.3 10.6 L20.6 8.3 Q21.4 7.5 20.6 6.7 L18.3 4.4 Q17.5 3.6 16.7 4.4 Z' fill='%23c98f86' stroke='%23241d13' stroke-width='0.8'/></g></svg>") 3 31, auto;
+  }
+
+  a,
+  button,
+  [role="button"],
+  .artifact,
+  .hero__sketchpad,
+  .site-nav__toggle {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'><g transform='scale(1.308)'><path d='M2.5 23.5 L4.2 18.9 L7.1 21.8 Z' fill='%23241d13'/><path d='M4.2 18.9 L7.1 21.8 L18.3 10.6 L14.4 6.7 Z' fill='%23474035' stroke='%23241d13' stroke-width='0.8'/><path d='M6.5 19.5 L16.4 9.6' stroke='%23241d13' stroke-width='1.3'/><path d='M14.4 6.7 L18.3 10.6 L20.6 8.3 Q21.4 7.5 20.6 6.7 L18.3 4.4 Q17.5 3.6 16.7 4.4 Z' fill='%23918a7d' stroke='%23241d13' stroke-width='0.8'/></g></svg>") 3 31, pointer;
+  }
+}
+
+/* full-page canvas for graphite trail, click dust & paper ripples */
+.pencil-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+/* hand-sketched border on buttons & skill badges */
+.hero__btn,
+.hero__skill {
+  position: relative;
+}
+
+.hero__btn::after,
+.hero__skill::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1.6px solid rgba(33, 28, 20, 0.75);
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  opacity: 0;
+  transform: scale(0.96) rotate(0.4deg);
+  transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  filter: url(#charcoal-rough-2);
+}
+
+.hero__btn:hover::after,
+.hero__btn:focus-visible::after,
+.hero__skill:hover::after {
+  opacity: 1;
+  transform: scale(1) rotate(-0.5deg);
+}
+
+/* project cards: pencil outline drawn around the card on hover */
+svg.proj-pin__ink {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  max-width: none;
+  height: calc(100% + 12px);
+  z-index: 3;
+  color: var(--graphite);
+  transform: rotate(0.4deg);
+  pointer-events: none;
+  overflow: visible;
+}
+
+svg.proj-pin__ink rect {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.55s ease 0.05s;
+}
+
+.proj-pin__card:hover svg.proj-pin__ink rect,
+.proj-pin__card:focus-within svg.proj-pin__ink rect {
+  stroke-dashoffset: 0;
+}
+
+/* =============================================
+   Portrait proximity — strokes wake near cursor
+   ============================================= */
+.sketchpad__hover-lines {
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.3s ease;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero__sketchpad.is-alive .sketchpad__hover-lines {
+  opacity: 0.85;
+}
+
+/* =============================================
+   Living paper — imperceptibly drifting grain
+   ============================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .paper-bg__grain {
+    inset: -240px;
+    animation: grain-drift 90s linear infinite alternate;
+    will-change: transform;
+  }
+
+  .paper-bg__speckle {
+    inset: -120px;
+    animation: grain-drift-2 70s linear infinite alternate;
+    will-change: transform;
+  }
+}
+
+@keyframes grain-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(240px, 120px, 0); }
+}
+
+@keyframes grain-drift-2 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-120px, 60px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__sketchpad .hatch-line { stroke-dasharray: none; }
+
+  .hero__sketchpad.is-drawing .hatch-line,
+  .hero__sketchpad.is-drawing .sketchpad__guides,
+  .hero__sketchpad.is-drawing .sketchpad__guides path,
+  .hero__sketchpad.is-drawing .sketchpad__pencil,
+  .intro-play .site-nav__logo,
+  .intro-play .hero__line,
+  .intro-play .hero__ghost {
+    animation: none;
+  }
+
+  .intro-pending .site-nav__logo,
+  .intro-pending .site-nav__menu a,
+  .intro-pending .site-nav__toggle,
+  .intro-pending .hero__line,
+  .intro-pending .hero__ghost,
+  .intro-pending .hero__eyebrow-text,
+  .intro-pending svg.hero__underline--sketch,
+  .intro-pending .hero__lines,
+  .intro-pending .hero__wins,
+  .intro-pending .hero__actions,
+  .intro-pending .hero__sketchpad {
+    opacity: 1;
+  }
+
+  svg.proj-pin__ink rect {
+    transition: none;
+  }
+
+  .sketchpad__hover-lines {
+    transition: none;
+  }
 }
 
 @media print {

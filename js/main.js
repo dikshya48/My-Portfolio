@@ -24,8 +24,11 @@
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+            const el = entry.target;
+            el.classList.add("is-visible");
+            /* drop the sketch mask once the sweep is done */
+            setTimeout(() => el.classList.add("is-inked"), 1000);
+            observer.unobserve(el);
           }
         });
       },
@@ -206,6 +209,262 @@
       art.addEventListener("mouseleave", clear);
       art.addEventListener("blur", clear);
     });
+  }
+
+  /* ---- Hero portrait: pencil-sketch reveal ---- */
+  const sketchpad = document.getElementById("sketchpad");
+  let sketchDraw = null;
+
+  if (sketchpad && !reduceMotion) {
+    const NS = "http://www.w3.org/2000/svg";
+
+    /* deterministic pseudo-random so every redraw looks hand-done but identical */
+    const rand = (n) => {
+      const s = Math.sin(n * 127.1) * 43758.5453;
+      return s - Math.floor(s);
+    };
+
+    /* fill a reveal mask with hand-length shading strokes: each row is broken
+       into 2-3 overlapping back-and-forth segments with uneven width and tilt */
+    const buildHatch = (maskSel, strokeW, dur, stagger, delay) => {
+      const mask = sketchpad.querySelector(maskSel);
+      if (!mask) return;
+      mask.querySelectorAll(".hatch-fallback, .hatch-g").forEach((n) => n.remove());
+
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "hatch-g");
+      g.setAttribute("transform", "rotate(-24 363 456)");
+
+      const span = 1560;
+      const x0 = 363 - span / 2;
+      const step = strokeW * 0.85;
+      const rows = Math.ceil(1500 / step);
+      const yTop = 456 - 750;
+
+      for (let i = 0; i < rows; i++) {
+        const y = yTop + step * i + step / 2;
+        const parts = 2 + Math.floor(rand(i) * 2);
+        const cuts = [0];
+        for (let p = 1; p < parts; p++) {
+          cuts.push((p + (rand(i * 7 + p) - 0.5) * 0.5) / parts);
+        }
+        cuts.push(1);
+
+        const rowDelay = delay + i * stagger;
+        let acc = 0;
+
+        for (let p = 0; p < parts; p++) {
+          const a = x0 + span * cuts[p] - (p > 0 ? 40 : 0);
+          const b = x0 + span * cuts[p + 1] + (p < parts - 1 ? 40 : 0);
+          const rev = (i + p) % 2 === 1;
+          const segDur = dur * (cuts[p + 1] - cuts[p]) + 0.06;
+
+          const line = document.createElementNS(NS, "line");
+          line.setAttribute("x1", rev ? b : a);
+          line.setAttribute("x2", rev ? a : b);
+          line.setAttribute("y1", (y + (rand(i * 13 + p) - 0.5) * strokeW * 0.1).toFixed(1));
+          line.setAttribute("y2", (y + (rand(i * 29 + p) - 0.5) * strokeW * 0.16).toFixed(1));
+          line.setAttribute("stroke", "#fff");
+          line.setAttribute("stroke-width", (strokeW * (1.12 + rand(i * 3 + p) * 0.14)).toFixed(1));
+          line.setAttribute("stroke-linecap", "round");
+          line.setAttribute("pathLength", "1");
+          line.setAttribute("class", "hatch-line");
+          line.style.setProperty("--hd", (rowDelay + acc).toFixed(2) + "s");
+          line.style.setProperty("--hdur", segDur.toFixed(2) + "s");
+          acc += segDur * 0.85;
+          g.appendChild(line);
+        }
+      }
+
+      mask.appendChild(g);
+    };
+
+    const motion = sketchpad.querySelector(".sketchpad__motion");
+
+    sketchDraw = () => {
+      sketchpad.classList.remove("is-blank");
+      sketchpad.classList.remove("is-drawing");
+      void sketchpad.offsetWidth; /* restart CSS animations */
+      sketchpad.classList.add("is-drawing");
+      if (motion && typeof motion.beginElement === "function") {
+        try { motion.beginElement(); } catch (e) { /* SMIL unavailable */ }
+      }
+    };
+
+    buildHatch("#hatch-sketch", 190, 0.35, 0.1, 0.4);
+    buildHatch("#hatch-final", 64, 0.45, 0.075, 1.25);
+    sketchpad.addEventListener("click", sketchDraw);
+  }
+
+  /* ---- First-visit intro: the page draws itself once ---- */
+  const root = document.documentElement;
+
+  if (root.classList.contains("intro-pending") && !reduceMotion) {
+    try { localStorage.setItem("dg-intro-v1", "1"); } catch (e) { /* private mode */ }
+    if (sketchpad) sketchpad.classList.add("is-blank");
+    root.classList.remove("intro-pending");
+    root.classList.add("intro-play");
+    if (sketchDraw) setTimeout(sketchDraw, 1600);
+    setTimeout(() => root.classList.add("intro-done"), 7000);
+  } else {
+    root.classList.remove("intro-pending");
+  }
+
+  /* ---- Pencil effects: click dust & paper ripple ---- */
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (finePointer && !reduceMotion) {
+    const canvas = document.createElement("canvas");
+    canvas.className = "pencil-fx";
+    canvas.setAttribute("aria-hidden", "true");
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0;
+    let h = 0;
+
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const dust = [];
+    const rings = [];
+    let raf = null;
+    let lastFrame = 0;
+
+    const kick = () => {
+      if (!raf) {
+        lastFrame = performance.now();
+        raf = requestAnimationFrame(tick);
+      }
+    };
+
+    const tick = () => {
+      const now = performance.now();
+      const dt = Math.min(now - lastFrame, 48);
+      lastFrame = now;
+      ctx.clearRect(0, 0, w, h);
+      ctx.lineCap = "round";
+
+      /* graphite dust */
+      for (let i = dust.length - 1; i >= 0; i--) {
+        const p = dust[i];
+        p.l += dt;
+        if (p.l >= p.L) { dust.splice(i, 1); continue; }
+        p.vy += 0.05 * (dt / 16);
+        p.x += p.vx * (dt / 16);
+        p.y += p.vy * (dt / 16);
+        ctx.fillStyle = "rgba(33, 28, 20, " + (0.45 * (1 - p.l / p.L)).toFixed(3) + ")";
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      }
+
+      /* paper indentation ripple */
+      for (let i = rings.length - 1; i >= 0; i--) {
+        const r = rings[i];
+        r.l += dt;
+        if (r.l >= 450) { rings.splice(i, 1); continue; }
+        const t = r.l / 450;
+        const rad = 3 + t * 24;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(33, 28, 20, " + (0.12 * (1 - t)).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, rad, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(255, 253, 248, " + (0.22 * (1 - t)).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(r.x + 0.8, r.y + 0.8, rad, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      if (dust.length || rings.length) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = null;
+        ctx.clearRect(0, 0, w, h);
+      }
+    };
+
+    document.addEventListener("pointerdown", (e) => {
+      for (let i = 0; i < 9; i++) {
+        dust.push({
+          x: e.clientX,
+          y: e.clientY,
+          vx: (Math.random() - 0.5) * 2.4,
+          vy: -Math.random() * 1.8 - 0.3,
+          s: 0.7 + Math.random() * 0.9,
+          l: 0,
+          L: 380 + Math.random() * 180,
+        });
+      }
+      rings.push({ x: e.clientX, y: e.clientY, l: 0 });
+      kick();
+    }, { passive: true });
+  }
+
+  /* ---- Project cards: pencil outline drawn on hover ---- */
+  if (finePointer) {
+    const SVGNS = "http://www.w3.org/2000/svg";
+    document.querySelectorAll(".proj-pin__card").forEach((card) => {
+      const svg = document.createElementNS(SVGNS, "svg");
+      svg.setAttribute("class", "proj-pin__ink");
+      svg.setAttribute("viewBox", "0 0 100 100");
+      svg.setAttribute("preserveAspectRatio", "none");
+      svg.setAttribute("aria-hidden", "true");
+      const rect = document.createElementNS(SVGNS, "rect");
+      rect.setAttribute("x", "1.2");
+      rect.setAttribute("y", "1.2");
+      rect.setAttribute("width", "97.6");
+      rect.setAttribute("height", "97.6");
+      rect.setAttribute("rx", "1.5");
+      rect.setAttribute("pathLength", "1");
+      svg.appendChild(rect);
+      card.appendChild(svg);
+    });
+  }
+
+  /* ---- Portrait proximity: strokes wake up near the cursor ---- */
+  if (sketchpad && finePointer && !reduceMotion) {
+    const artSvg = sketchpad.querySelector(".sketchpad__art");
+    const spot = sketchpad.querySelector(".sketchpad__spot");
+    const hoverLines = sketchpad.querySelector(".sketchpad__hover-lines");
+
+    if (artSvg && spot && hoverLines) {
+      let queued = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      sketchpad.addEventListener("pointermove", (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const m = artSvg.getScreenCTM();
+          if (!m) return;
+          const inv = m.inverse();
+          const x = inv.a * lastX + inv.c * lastY + inv.e;
+          const y = inv.b * lastX + inv.d * lastY + inv.f;
+          spot.setAttribute("cx", x.toFixed(1));
+          spot.setAttribute("cy", y.toFixed(1));
+          const dx = Math.max(-1, Math.min(1, (x - 363) / 363));
+          const dy = Math.max(-1, Math.min(1, (y - 456) / 456));
+          hoverLines.style.transform = "translate(" + (dx * 3).toFixed(1) + "px, " + (dy * 3).toFixed(1) + "px)";
+          sketchpad.classList.add("is-alive");
+        });
+      }, { passive: true });
+
+      sketchpad.addEventListener("pointerleave", () => {
+        sketchpad.classList.remove("is-alive");
+      });
+    }
   }
 
   /* ---- Active nav link ---- */

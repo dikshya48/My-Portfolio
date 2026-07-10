@@ -211,6 +211,9 @@ main > .section {
     margin: 0;
     object-fit: contain;
     object-position: right bottom;
+  }
+
+  svg.sketchpad__art {
     -webkit-mask-image: radial-gradient(
       ellipse 95% 108% at 92% 52%,
       #000 30%,
@@ -386,8 +389,7 @@ main > .section {
   }
 
   .proj-board {
-    column-count: 2;
-    column-gap: clamp(1.25rem, 3vw, 2rem);
+    gap: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem);
   }
 
   .proj-pin--tall,
@@ -458,10 +460,6 @@ main > .section {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-  }
-
-  .proj-board {
-    column-count: 1;
   }
 
   .proj-pin--tall,
