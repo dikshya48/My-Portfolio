@@ -235,11 +235,12 @@
       g.setAttribute("class", "hatch-g");
       g.setAttribute("transform", "rotate(-24 363 456)");
 
-      const span = 1560;
+      /* just large enough to cover the rotated 726x912 image, no more */
+      const span = 1100;
       const x0 = 363 - span / 2;
       const step = strokeW * 0.85;
-      const rows = Math.ceil(1500 / step);
-      const yTop = 456 - 750;
+      const rows = Math.ceil(1200 / step);
+      const yTop = 456 - 600;
 
       for (let i = 0; i < rows; i++) {
         const y = yTop + step * i + step / 2;
@@ -290,8 +291,8 @@
       }
     };
 
-    buildHatch("#hatch-sketch", 190, 0.35, 0.1, 0.4);
-    buildHatch("#hatch-final", 64, 0.45, 0.075, 1.25);
+    buildHatch("#hatch-sketch", 200, 0.35, 0.1, 0.4);
+    buildHatch("#hatch-final", 78, 0.45, 0.085, 1.25);
     sketchDraw(); /* the portrait sketches itself on every visit */
     sketchpad.addEventListener("click", sketchDraw);
   }
@@ -384,14 +385,16 @@
     document.body.appendChild(light);
     let lightRaf = null;
 
+    let lx = 0;
+    let ly = 0;
+
     document.addEventListener("pointermove", (e) => {
+      lx = e.clientX;
+      ly = e.clientY;
       if (lightRaf) return;
-      const x = e.clientX;
-      const y = e.clientY;
       lightRaf = requestAnimationFrame(() => {
         lightRaf = null;
-        light.style.setProperty("--lx", x + "px");
-        light.style.setProperty("--ly", y + "px");
+        light.style.transform = "translate3d(" + lx + "px, " + ly + "px, 0)";
         light.classList.add("is-on");
       });
     }, { passive: true });
@@ -463,9 +466,6 @@
           const y = inv.b * lastX + inv.d * lastY + inv.f;
           spot.setAttribute("cx", x.toFixed(1));
           spot.setAttribute("cy", y.toFixed(1));
-          const dx = Math.max(-1, Math.min(1, (x - 363) / 363));
-          const dy = Math.max(-1, Math.min(1, (y - 456) / 456));
-          hoverLines.style.transform = "translate(" + (dx * 3).toFixed(1) + "px, " + (dy * 3).toFixed(1) + "px)";
           sketchpad.classList.add("is-alive");
         });
       }, { passive: true });

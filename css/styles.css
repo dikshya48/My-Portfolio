@@ -2436,26 +2436,31 @@ svg.sketchpad__art {
   pointer-events: none;
 }
 
-/* soft white spotlight following the cursor across the whole page */
+/* soft light smudge following the cursor — an uneven, blurred blob like
+   a highlight rubbed into the canvas; GPU-composited, never repaints */
 .cursor-light {
   position: fixed;
-  inset: 0;
+  top: -210px;
+  left: -210px;
+  width: 420px;
+  height: 420px;
+  border-radius: 58% 42% 55% 45% / 48% 57% 43% 52%;
   z-index: 1999;
   pointer-events: none;
   mix-blend-mode: soft-light;
-  background: radial-gradient(
-    circle 280px at var(--lx, -600px) var(--ly, -600px),
-    rgba(255, 253, 244, 1) 0%,
-    rgba(255, 253, 244, 0.55) 42%,
-    rgba(255, 253, 244, 0.18) 62%,
-    transparent 78%
-  );
+  background:
+    radial-gradient(60% 55% at 42% 46%, rgba(255, 253, 244, 0.7) 0%, rgba(255, 253, 244, 0.28) 52%, transparent 76%),
+    radial-gradient(46% 40% at 63% 58%, rgba(255, 253, 244, 0.45) 0%, transparent 70%),
+    radial-gradient(32% 27% at 34% 66%, rgba(255, 253, 244, 0.35) 0%, transparent 70%);
+  filter: blur(7px);
   opacity: 0;
   transition: opacity 0.35s ease;
+  transform: translate3d(-1000px, -1000px, 0);
+  will-change: transform, opacity;
 }
 
 .cursor-light.is-on {
-  opacity: 1;
+  opacity: 0.8;
 }
 
 /* hand-sketched border on buttons & skill badges */
@@ -2521,40 +2526,12 @@ svg.proj-pin__ink rect {
    ============================================= */
 .sketchpad__hover-lines {
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.3s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
-  will-change: transform;
 }
 
 .hero__sketchpad.is-alive .sketchpad__hover-lines {
   opacity: 0.85;
-}
-
-/* =============================================
-   Living paper — imperceptibly drifting grain
-   ============================================= */
-@media (prefers-reduced-motion: no-preference) {
-  .paper-bg__grain {
-    inset: -240px;
-    animation: grain-drift 90s linear infinite alternate;
-    will-change: transform;
-  }
-
-  .paper-bg__speckle {
-    inset: -120px;
-    animation: grain-drift-2 70s linear infinite alternate;
-    will-change: transform;
-  }
-}
-
-@keyframes grain-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(240px, 120px, 0); }
-}
-
-@keyframes grain-drift-2 {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-120px, 60px, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
