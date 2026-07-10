@@ -282,7 +282,6 @@
     const motion = sketchpad.querySelector(".sketchpad__motion");
 
     sketchDraw = () => {
-      sketchpad.classList.remove("is-blank");
       sketchpad.classList.remove("is-drawing");
       void sketchpad.offsetWidth; /* restart CSS animations */
       sketchpad.classList.add("is-drawing");
@@ -293,21 +292,8 @@
 
     buildHatch("#hatch-sketch", 190, 0.35, 0.1, 0.4);
     buildHatch("#hatch-final", 64, 0.45, 0.075, 1.25);
+    sketchDraw(); /* the portrait sketches itself on every visit */
     sketchpad.addEventListener("click", sketchDraw);
-  }
-
-  /* ---- First-visit intro: the page draws itself once ---- */
-  const root = document.documentElement;
-
-  if (root.classList.contains("intro-pending") && !reduceMotion) {
-    try { localStorage.setItem("dg-intro-v1", "1"); } catch (e) { /* private mode */ }
-    if (sketchpad) sketchpad.classList.add("is-blank");
-    root.classList.remove("intro-pending");
-    root.classList.add("intro-play");
-    if (sketchDraw) setTimeout(sketchDraw, 1600);
-    setTimeout(() => root.classList.add("intro-done"), 7000);
-  } else {
-    root.classList.remove("intro-pending");
   }
 
   /* ---- Pencil effects: click dust & paper ripple ---- */
@@ -390,6 +376,29 @@
         ctx.clearRect(0, 0, w, h);
       }
     };
+
+    /* white spotlight that follows the cursor across the page */
+    const light = document.createElement("div");
+    light.className = "cursor-light";
+    light.setAttribute("aria-hidden", "true");
+    document.body.appendChild(light);
+    let lightRaf = null;
+
+    document.addEventListener("pointermove", (e) => {
+      if (lightRaf) return;
+      const x = e.clientX;
+      const y = e.clientY;
+      lightRaf = requestAnimationFrame(() => {
+        lightRaf = null;
+        light.style.setProperty("--lx", x + "px");
+        light.style.setProperty("--ly", y + "px");
+        light.classList.add("is-on");
+      });
+    }, { passive: true });
+
+    document.documentElement.addEventListener("pointerleave", () => {
+      light.classList.remove("is-on");
+    });
 
     document.addEventListener("pointerdown", (e) => {
       for (let i = 0; i < 9; i++) {

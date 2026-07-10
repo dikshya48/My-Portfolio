@@ -2406,133 +2406,8 @@ svg.sketchpad__art {
   100% { opacity: 0; }
 }
 
-/* blank paper state while the intro waits to start drawing */
-.hero__sketchpad.is-blank .hatch-line {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.hero__sketchpad.is-blank .sketchpad__guides,
-.hero__sketchpad.is-blank .sketchpad__hover-lines {
-  opacity: 0;
-}
-
 .hero__eyebrow-text {
   display: inline-block;
-}
-
-/* =============================================
-   First-visit intro — the page draws itself once
-   ============================================= */
-.intro-pending .site-nav__logo,
-.intro-pending .site-nav__menu a,
-.intro-pending .site-nav__toggle,
-.intro-pending .hero__line,
-.intro-pending .hero__ghost,
-.intro-pending .hero__eyebrow-text,
-.intro-pending .hero__lines,
-.intro-pending .hero__wins,
-.intro-pending .hero__actions,
-.intro-pending .hero__sketchpad {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .intro-play .hero__lines,
-  .intro-play .hero__sketchpad {
-    opacity: 1;
-  }
-
-  /* handwriting: logo, then the name, line by line */
-  .intro-play .site-nav__logo {
-    animation: write-in 0.55s ease-in-out 0.05s both;
-  }
-
-  .intro-play .hero__line:first-child {
-    animation: write-in 0.6s ease-in-out 0.4s both;
-  }
-
-  .intro-play .hero__line--indent {
-    animation: write-in 0.5s ease-in-out 0.95s both;
-  }
-
-  .intro-play .hero__ghost {
-    animation: ghost-in 0.8s ease 1.35s both;
-  }
-
-  /* supporting content shaded in with a pencil sweep */
-  .intro-play .hero__eyebrow-text,
-  .intro-play .hero__role,
-  .intro-play .hero__skill,
-  .intro-play .hero__wins,
-  .intro-play .hero__actions,
-  .intro-play .site-nav__menu a,
-  .intro-play .site-nav__toggle {
-    -webkit-mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
-    mask-image: linear-gradient(100deg, #000 42%, rgba(0, 0, 0, 0.45) 50%, transparent 58%);
-    -webkit-mask-size: 260% 100%;
-    mask-size: 260% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    animation: pencil-shade 0.75s ease both;
-  }
-
-  .intro-play .hero__eyebrow-text { animation-delay: 1.45s; }
-  .intro-play .hero__role { animation-delay: 4.35s; }
-  .intro-play .hero__skill:nth-child(1) { animation-delay: 4.55s; }
-  .intro-play .hero__skill:nth-child(2) { animation-delay: 4.7s; }
-  .intro-play .hero__skill:nth-child(3) { animation-delay: 4.85s; }
-  .intro-play .hero__wins { animation-delay: 4.9s; animation-duration: 1s; }
-  .intro-play .hero__actions { animation-delay: 5.3s; }
-  .intro-play .site-nav__toggle { animation-delay: 5.5s; }
-  .intro-play .site-nav__menu a:nth-child(1) { animation-delay: 5.5s; }
-  .intro-play .site-nav__menu a:nth-child(2) { animation-delay: 5.58s; }
-  .intro-play .site-nav__menu a:nth-child(3) { animation-delay: 5.66s; }
-  .intro-play .site-nav__menu a:nth-child(4) { animation-delay: 5.74s; }
-  .intro-play .site-nav__menu a:nth-child(5) { animation-delay: 5.82s; }
-}
-
-/* after the intro: strip masks/animations so the page runs clean */
-.intro-done .site-nav__logo,
-.intro-done .hero__line,
-.intro-done .hero__ghost {
-  animation: none;
-  clip-path: none;
-}
-
-.intro-done .hero__eyebrow-text,
-.intro-done .hero__role,
-.intro-done .hero__skill,
-.intro-done .hero__wins,
-.intro-done .hero__actions,
-.intro-done .site-nav__menu a,
-.intro-done .site-nav__toggle {
-  animation: none;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-@keyframes write-in {
-  from { opacity: 1; clip-path: inset(-14% 103% -14% -3%); }
-  to { opacity: 1; clip-path: inset(-14% -3% -14% -3%); }
-}
-
-@keyframes ghost-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes pencil-shade {
-  from {
-    opacity: 1;
-    -webkit-mask-position: 100% 0;
-    mask-position: 100% 0;
-  }
-  to {
-    opacity: 1;
-    -webkit-mask-position: 0% 0;
-    mask-position: 0% 0;
-  }
 }
 
 /* =============================================
@@ -2559,6 +2434,28 @@ svg.sketchpad__art {
   inset: 0;
   z-index: 2000;
   pointer-events: none;
+}
+
+/* soft white spotlight following the cursor across the whole page */
+.cursor-light {
+  position: fixed;
+  inset: 0;
+  z-index: 1999;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(
+    circle 280px at var(--lx, -600px) var(--ly, -600px),
+    rgba(255, 253, 244, 1) 0%,
+    rgba(255, 253, 244, 0.55) 42%,
+    rgba(255, 253, 244, 0.18) 62%,
+    transparent 78%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.cursor-light.is-on {
+  opacity: 1;
 }
 
 /* hand-sketched border on buttons & skill badges */
@@ -2666,25 +2563,8 @@ svg.proj-pin__ink rect {
   .hero__sketchpad.is-drawing .hatch-line,
   .hero__sketchpad.is-drawing .sketchpad__guides,
   .hero__sketchpad.is-drawing .sketchpad__guides path,
-  .hero__sketchpad.is-drawing .sketchpad__pencil,
-  .intro-play .site-nav__logo,
-  .intro-play .hero__line,
-  .intro-play .hero__ghost {
+  .hero__sketchpad.is-drawing .sketchpad__pencil {
     animation: none;
-  }
-
-  .intro-pending .site-nav__logo,
-  .intro-pending .site-nav__menu a,
-  .intro-pending .site-nav__toggle,
-  .intro-pending .hero__line,
-  .intro-pending .hero__ghost,
-  .intro-pending .hero__eyebrow-text,
-  .intro-pending svg.hero__underline--sketch,
-  .intro-pending .hero__lines,
-  .intro-pending .hero__wins,
-  .intro-pending .hero__actions,
-  .intro-pending .hero__sketchpad {
-    opacity: 1;
   }
 
   svg.proj-pin__ink rect {
