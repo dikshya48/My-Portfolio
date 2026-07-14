@@ -8,11 +8,12 @@
   <link rel="icon" href="assets/favicon.png" type="image/png" sizes="192x192">
   <link rel="icon" href="assets/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" as="image" href="assets/portrait-color.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sacramento&family=Permanent+Marker&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260709c">
-  <link rel="stylesheet" href="css/responsive.css?v=20260709c">
+  <link rel="stylesheet" href="css/styles.css?v=20260714a">
+  <link rel="stylesheet" href="css/responsive.css?v=20260714a">
 </head>
   
 <body>
@@ -135,7 +136,7 @@
           <!-- <a class="hero__btn hero__btn--secondary" href="assets/DikshyaGiri_Resume_DG.pdf" download="DikshyaGiri_Resume.pdf">Download Resume</a> -->
         </div>
       </div>
-      <div class="hero__portrait hero__sketchpad" id="sketchpad" title="click to redraw">
+      <div class="hero__portrait hero__sketchpad" id="sketchpad">
         <svg class="sketchpad__art" viewBox="0 0 726 912" preserveAspectRatio="xMaxYMax meet" role="img" aria-label="Portrait of Dikshya Giri">
           <defs>
             <filter id="pencil-render" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
@@ -161,13 +162,21 @@
             <mask id="hatch-final" maskUnits="userSpaceOnUse" x="-250" y="-250" width="1250" height="1450">
               <rect class="hatch-fallback" x="-250" y="-250" width="1250" height="1450" fill="#fff"/>
             </mask>
+            <radialGradient id="dissolve-grad">
+              <stop offset="0" stop-color="#fff"/>
+              <stop offset="0.55" stop-color="#fff" stop-opacity="0.85"/>
+              <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
             <radialGradient id="hover-grad">
-              <stop offset="0" stop-color="#fff" stop-opacity="0.9"/>
-              <stop offset="0.65" stop-color="#fff" stop-opacity="0.45"/>
+              <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+              <stop offset="0.55" stop-color="#fff" stop-opacity="0.85"/>
               <stop offset="1" stop-color="#fff" stop-opacity="0"/>
             </radialGradient>
             <mask id="hover-spot" maskUnits="userSpaceOnUse" x="-250" y="-250" width="1250" height="1450">
-              <circle class="sketchpad__spot" cx="-500" cy="-500" r="150" fill="url(#hover-grad)"/>
+              <circle class="sketchpad__spot" cx="-500" cy="-500" r="190" fill="url(#hover-grad)"/>
+            </mask>
+            <mask id="portrait-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="726" height="912" style="mask-type:alpha">
+              <image href="assets/portrait.png" x="0" y="0" width="726" height="912"/>
             </mask>
           </defs>
 
@@ -177,13 +186,10 @@
           <image class="sketchpad__photo" href="assets/portrait.png" x="0" y="0" width="726" height="912" mask="url(#hatch-final)"/>
           <!-- graphite strokes that wake up near the cursor -->
           <image class="sketchpad__hover-lines" href="assets/portrait.png" x="0" y="0" width="726" height="912" filter="url(#pencil-render)" mask="url(#hover-spot)"/>
-
-          <!-- artist's construction guides -->
-          <g class="sketchpad__guides" aria-hidden="true">
-            <path pathLength="1" style="--gd:0" d="M186 332 A 172 216 0 1 1 530 332 A 172 216 0 1 1 186 332"/>
-            <path pathLength="1" style="--gd:0.28" d="M358 96 L 358 585"/>
-            <path pathLength="1" style="--gd:0.5" d="M208 368 C 300 356, 420 356, 512 366"/>
-            <path pathLength="1" style="--gd:0.7" d="M64 726 C 210 656, 512 654, 696 736"/>
+          <!-- colour shows through where the cursor's light passes,
+               clipped to the portrait silhouette -->
+          <g mask="url(#portrait-cut)">
+            <image class="sketchpad__color" href="assets/portrait-color.jpg" x="0" y="0" width="726" height="912" mask="url(#hover-spot)"/>
           </g>
 
           <!-- the pencil doing the drawing -->
@@ -537,6 +543,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/main.js?v=20260709c"></script>
+  <script src="js/main.js?v=20260714a"></script>
 </body>
 </html>

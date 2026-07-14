@@ -280,7 +280,55 @@
       mask.appendChild(g);
     };
 
+    /* fill a reveal mask with soft particles that bloom in one by one,
+       dissolving the finished portrait into view */
+    const buildParticles = (maskSel, delayStart, delaySpan) => {
+      const mask = sketchpad.querySelector(maskSel);
+      if (!mask) return;
+      mask.querySelectorAll(".hatch-fallback, .hatch-g, .dissolve-g").forEach((n) => n.remove());
+
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "dissolve-g");
+
+      const cols = 15;
+      const rows = 19;
+      const cw = 726 / cols;
+      const ch = 912 / rows;
+      let n = 0;
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          n++;
+          const x = i * cw + cw / 2 + (rand(n * 3.7) - 0.5) * cw * 1.2;
+          const y = j * ch + ch / 2 + (rand(n * 7.3) - 0.5) * ch * 1.2;
+          const r = 42 + rand(n * 11.1) * 34;
+
+          const dot = document.createElementNS(NS, "circle");
+          dot.setAttribute("cx", x.toFixed(1));
+          dot.setAttribute("cy", y.toFixed(1));
+          dot.setAttribute("r", r.toFixed(1));
+          dot.setAttribute("fill", "url(#dissolve-grad)");
+          dot.setAttribute("class", "dissolve-dot");
+          dot.style.setProperty("--dd", (delayStart + rand(n * 13.9) * delaySpan).toFixed(2) + "s");
+          g.appendChild(dot);
+        }
+      }
+
+      /* opaque cap fades in last so the mask ends fully white — no gaps */
+      const cap = document.createElementNS(NS, "rect");
+      cap.setAttribute("class", "dissolve-cap");
+      cap.setAttribute("x", "-250");
+      cap.setAttribute("y", "-250");
+      cap.setAttribute("width", "1250");
+      cap.setAttribute("height", "1450");
+      cap.setAttribute("fill", "#fff");
+      g.appendChild(cap);
+
+      mask.appendChild(g);
+    };
+
     const motion = sketchpad.querySelector(".sketchpad__motion");
+    let drawTimer = null;
 
     sketchDraw = () => {
       sketchpad.classList.remove("is-drawing");
@@ -289,12 +337,15 @@
       if (motion && typeof motion.beginElement === "function") {
         try { motion.beginElement(); } catch (e) { /* SMIL unavailable */ }
       }
+      /* let go of the class once the 4.2s draw finishes, so the
+         hover reveal of the illustrated portrait can kick in */
+      clearTimeout(drawTimer);
+      drawTimer = setTimeout(() => sketchpad.classList.remove("is-drawing"), 4600);
     };
 
     buildHatch("#hatch-sketch", 200, 0.35, 0.1, 0.4);
-    buildHatch("#hatch-final", 78, 0.45, 0.085, 1.25);
+    buildParticles("#hatch-final", 1.2, 2.1);
     sketchDraw(); /* the portrait sketches itself on every visit */
-    sketchpad.addEventListener("click", sketchDraw);
   }
 
   /* ---- Pencil effects: click dust & paper ripple ---- */
