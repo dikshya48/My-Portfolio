@@ -2513,8 +2513,8 @@ svg.proj-pin__ink rect {
 .sketchpad__color {
   opacity: 0;
   pointer-events: none;
-  /* counteract the paper multiply blend so the colours stay warm */
-  filter: saturate(2) brightness(1.05);
+  /* counteract the paper multiply blend without going too warm */
+  filter: saturate(1.4) brightness(1.06);
 }
 
 .hero__sketchpad.is-alive .sketchpad__color {
