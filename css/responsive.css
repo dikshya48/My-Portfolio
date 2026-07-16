@@ -160,24 +160,17 @@ main > .section {
   .hero__wins {
     flex: 0 0 auto;
     align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.45rem, 1.1vh, 0.75rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.5rem, 1.2vh, 0.85rem) clamp(0.5rem, 1vw, 0.8rem);
     margin-top: auto;
     margin-bottom: auto;
     width: auto;
     max-width: 100%;
   }
 
-  .hero__wins::before {
-    top: -14%;
-    bottom: -14%;
-    left: -14%;
-    right: -14%;
-  }
-
   .hero__win {
-    padding: clamp(0.3rem, 0.55vh, 0.45rem) 0;
+    padding: clamp(0.55rem, 1.1vh, 0.8rem) clamp(0.7rem, 1.2vw, 0.95rem);
   }
 
   .hero__win-medal {
@@ -252,11 +245,11 @@ main > .section {
   }
 
   .hero__wins {
-    gap: clamp(0.3rem, 0.7vh, 0.5rem);
+    gap: clamp(0.35rem, 0.9vh, 0.6rem) clamp(0.4rem, 0.8vw, 0.6rem);
   }
 
   .hero__win {
-    padding: 0.2rem 0;
+    padding: 0.45rem 0.7rem;
   }
 
   .hero__portrait {
@@ -350,20 +343,13 @@ main > .section {
   .hero__wins {
     flex: 0 0 auto;
     align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.35rem, 0.9vh, 0.6rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.4rem, 1vh, 0.7rem) clamp(0.45rem, 0.9vw, 0.7rem);
     margin-top: auto;
     margin-bottom: auto;
     width: auto;
     max-width: 100%;
-  }
-
-  .hero__wins::before {
-    top: -14%;
-    bottom: -14%;
-    left: -14%;
-    right: -14%;
   }
 
   .hero__portrait {
@@ -544,6 +530,12 @@ main > .section {
     flex: 0 0 auto;
     justify-content: flex-start;
     margin-top: clamp(1.25rem, 3vw, 1.75rem);
+    padding-bottom: 0;
+  }
+
+  /* single column on phones — no zigzag offset */
+  .hero__win:nth-child(even) {
+    transform: none;
   }
 
   .hero__portrait {
