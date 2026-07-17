@@ -527,6 +527,42 @@
     }
   }
 
+  /* ---- Clothesline: wind gust ripples through the hanging art ---- */
+  const line = document.querySelector(".archive--line");
+  if (line && !reduceMotion) {
+    const arts = Array.from(line.querySelectorAll(".artifact"));
+    let gusting = false;
+
+    const gust = (origin) => {
+      if (gusting || !arts.length) return;
+      gusting = true;
+      let maxDelay = 0;
+      arts.forEach((art, i) => {
+        const d = Math.abs(i - origin) * 0.18;
+        maxDelay = Math.max(maxDelay, d);
+        art.style.setProperty("--gd", d.toFixed(2) + "s");
+      });
+      line.classList.add("is-gust");
+      setTimeout(() => {
+        line.classList.remove("is-gust");
+        gusting = false;
+      }, 3050 + maxDelay * 1000);
+    };
+
+    arts.forEach((art, i) => {
+      art.addEventListener("pointerenter", () => gust(i));
+    });
+
+    /* brushing the rope itself also stirs the whole line */
+    line.addEventListener("pointermove", (e) => {
+      const box = line.getBoundingClientRect();
+      if (e.clientY - box.top < 150) {
+        const frac = (e.clientX - box.left) / box.width;
+        gust(Math.round(frac * (arts.length - 1)));
+      }
+    }, { passive: true });
+  }
+
   /* ---- Active nav link ---- */
   const navLinks = document.querySelectorAll(".site-nav__menu a");
   const ids = ["home", "experiences", "projects", "gallery", "contact"];

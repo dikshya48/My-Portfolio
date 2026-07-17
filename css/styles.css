@@ -776,8 +776,8 @@ svg.sketchpad__art {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.1rem;
-  padding: 0.42rem 0.85rem;
+  min-height: 2.6rem;
+  padding: 0.6rem 1.35rem;
   font-family: var(--font-body);
   font-size: var(--fs-btn);
   font-weight: 500;
@@ -790,8 +790,9 @@ svg.sketchpad__art {
   cursor: pointer;
   background: var(--graphite);
   border: 1.5px solid var(--graphite);
-  border-radius: 5px;
-  box-shadow: 0 2px 0 rgba(20, 16, 10, 0.4);
+  border-radius: 14px;
+  /* raised edge + soft drop = reads as pressable */
+  box-shadow: 0 3px 0 rgba(20, 16, 10, 0.45), 0 6px 12px rgba(26, 20, 12, 0.16);
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -801,15 +802,15 @@ svg.sketchpad__art {
 
 .hero__btn:hover,
 .hero__btn:focus-visible {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 0 rgba(20, 16, 10, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 rgba(20, 16, 10, 0.45), 0 10px 18px rgba(26, 20, 12, 0.2);
   outline: 2px solid rgba(33, 28, 20, 0.35);
   outline-offset: 2px;
 }
 
 .hero__btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 rgba(20, 16, 10, 0.35);
+  transform: translateY(3px);
+  box-shadow: 0 0 0 rgba(20, 16, 10, 0.35), 0 2px 5px rgba(26, 20, 12, 0.12);
 }
 
 .hero__btn--secondary {
@@ -880,17 +881,30 @@ svg.sketchpad__art {
   60% { transform: rotate(8deg); }
 }
 
-/* white fills in 1→2→3→4 and holds, then black sweeps 1→2→3→4 */
-.hero__win:nth-child(2) { animation-delay: 1.5s; }
-.hero__win:nth-child(3) { animation-delay: 3s; }
-.hero__win:nth-child(4) { animation-delay: 4.5s; }
+/* white fills in 1→2→3→4 and holds, then black sweeps 1→2→3→4.
+   Each card is "kicked" by the previous one: it recoils (--rx/--ry) as its
+   colour flips, then lunges (--kx/--ky) into the next card 1.5s later. */
+.hero__win:nth-child(1) { --rx: -6px; --ry: -6px; --kx: 12px; --ky: 0px; }
+.hero__win:nth-child(2) { --rx: 9px; --ry: 0px; --kx: -10px; --ky: 12px; animation-delay: 1.5s; }
+.hero__win:nth-child(3) { --rx: -6px; --ry: 9px; --kx: 12px; --ky: 0px; animation-delay: 3s; }
+/* card 4 closes the loop — it lunges up-left into card 1, whose flip lands
+   exactly 1.5s after card 4's, so the circle never breaks */
+.hero__win:nth-child(4) { --rx: 9px; --ry: 0px; --kx: -10px; --ky: -12px; animation-delay: 4.5s; }
 
 @keyframes win-wave {
-  0% { --lit: 0; }
-  5% { --lit: 1; }
-  50% { --lit: 1; }
-  55% { --lit: 0; }
-  100% { --lit: 0; }
+  0% { --lit: 0; translate: 0px 0px; }
+  1.5% { translate: var(--rx, 0px) var(--ry, 0px); }
+  5% { --lit: 1; translate: 0px 0px; }
+  10.5% { translate: 0px 0px; }
+  12.5% { translate: var(--kx, 0px) var(--ky, 0px); }
+  15.5% { translate: 0px 0px; }
+  50% { --lit: 1; translate: 0px 0px; }
+  51.5% { translate: var(--rx, 0px) var(--ry, 0px); }
+  55% { --lit: 0; translate: 0px 0px; }
+  60.5% { translate: 0px 0px; }
+  62.5% { translate: var(--kx, 0px) var(--ky, 0px); }
+  65.5% { translate: 0px 0px; }
+  100% { --lit: 0; translate: 0px 0px; }
 }
 
 .hero__win-medal {
@@ -1682,7 +1696,8 @@ svg.sketchpad__art {
 .artifact__frame {
   position: relative;
   padding: 12px 12px 14px;
-  background: var(--paper-light);
+  /* the same beige as the award cards' light phase */
+  background: rgba(242, 234, 218, 0.72);
   box-shadow:
     0 1px 1px rgba(33, 28, 20, 0.18),
     0 8px 18px rgba(33, 28, 20, 0.18);
@@ -2465,11 +2480,138 @@ svg.sketchpad__art {
   transform: scale(1) rotate(-0.5deg);
 }
 
+/* =============================================
+   Clothesline gallery — artworks hung on a sagging
+   rope right under the hero, like washing drying
+   ============================================= */
+.line-caption {
+  display: none; /* desktop clothesline only */
+}
+
+@media (min-width: 1024px) {
+  /* tuck the line right under the hero — no headline, no gap */
+  .section--archive {
+    padding-top: clamp(3.25rem, 6vw, 5rem);
+    padding-bottom: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  /* the sentence that ties the two halves of her together */
+  .line-caption {
+    display: block;
+    position: absolute;
+    left: 4%;
+    top: 0;
+    margin: 0;
+    font-family: var(--font-script);
+    font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+    font-weight: 600;
+    color: var(--graphite);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .archive--line {
+    perspective: 900px;
+    min-height: 0;
+    height: clamp(435px, 39vw, 490px);
+    /* full-bleed: the rope runs from screen edge to screen edge */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .archive__rope {
+    position: absolute;
+    top: 34px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .archive--line .archive__arrow {
+    display: none;
+  }
+
+  /* every artwork hangs from the rope — positions follow the waves */
+  .archive--line .artifact { width: clamp(150px, 14.5vw, 210px); }
+  .archive--line .artifact:nth-of-type(1) { left: 4%; top: 91px; transform: rotate(-2.2deg); }
+  .archive--line .artifact:nth-of-type(2) { left: 19.2%; top: 98px; transform: rotate(1.8deg); }
+  .archive--line .artifact:nth-of-type(3) { left: 34.4%; top: 81px; transform: rotate(-1.5deg); }
+  .archive--line .artifact:nth-of-type(4) { left: 49.6%; top: 97px; transform: rotate(2.2deg); }
+  .archive--line .artifact:nth-of-type(5) { left: 64.8%; top: 87px; transform: rotate(-1.8deg); }
+  .archive--line .artifact:nth-of-type(6) { left: 80%; top: 91px; transform: rotate(1.5deg); }
+
+  /* swap the tape/pin props for a wooden clothespin gripping the rope */
+  .archive--line .artifact__tape,
+  .archive--line .artifact__pin {
+    display: none;
+  }
+
+  .archive--line .artifact::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    width: 13px;
+    height: 30px;
+    translate: -50% 0;
+    background:
+      linear-gradient(rgba(33, 28, 20, 0.45), rgba(33, 28, 20, 0.45)) 50% 55%/1.5px 45% no-repeat,
+      linear-gradient(90deg, #b5a58c, #a8937b 55%, #8f7b66);
+    border: 1px solid rgba(33, 28, 20, 0.4);
+    border-radius: 6px 6px 3px 3px;
+    box-shadow: 0 1px 2px rgba(26, 20, 12, 0.25);
+    z-index: 3;
+  }
+
+  /* laundry swaying in a light breeze, each at its own pace */
+  .archive--line .artifact {
+    transform-origin: 50% -12px;
+    animation: art-sway 5.2s ease-in-out infinite alternate;
+  }
+
+  .archive--line .artifact:nth-of-type(2) { animation-duration: 6s; animation-delay: -1.7s; }
+  .archive--line .artifact:nth-of-type(3) { animation-duration: 4.7s; animation-delay: -0.9s; }
+  .archive--line .artifact:nth-of-type(4) { animation-duration: 5.6s; animation-delay: -2.4s; }
+  .archive--line .artifact:nth-of-type(5) { animation-duration: 4.9s; animation-delay: -3.1s; }
+  .archive--line .artifact:nth-of-type(6) { animation-duration: 5.9s; animation-delay: -1.2s; }
+
+  @keyframes art-sway {
+    from { rotate: x -2.4deg; }
+    to { rotate: x 3deg; }
+  }
+
+  /* wind gust — a swing that ripples outward from wherever you touched,
+     each card catching the breeze a beat after its neighbour */
+  .archive--line.is-gust .artifact {
+    animation: art-gust 3s ease-in-out both;
+    animation-delay: var(--gd, 0s);
+  }
+
+  /* a softly damped wave — swells in, rocks, breathes out */
+  @keyframes art-gust {
+    0% { rotate: x 0deg; }
+    14% { rotate: x 10deg; }
+    34% { rotate: x -7deg; }
+    54% { rotate: x 4.5deg; }
+    71% { rotate: x -2.5deg; }
+    85% { rotate: x 1deg; }
+    100% { rotate: x 0deg; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive--line .artifact {
+    animation: none;
+  }
+}
+
 /* social icons — solid black circular buttons under the skill badges */
 .hero__socials {
   display: flex;
   gap: 0.9rem;
-  margin-top: 1.2rem;
+  margin-top: 1.9rem;
   align-items: center;
 }
 

@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sacramento&family=Permanent+Marker&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260716n">
-  <link rel="stylesheet" href="css/responsive.css?v=20260716n">
+  <link rel="stylesheet" href="css/styles.css?v=20260717j">
+  <link rel="stylesheet" href="css/responsive.css?v=20260717j">
 </head>
   
 <body>
@@ -65,10 +65,10 @@
     <a href="#home" class="site-nav__logo">DG</a>
     <nav class="site-nav__menu" aria-label="Main navigation">
       <a href="#home">HOME</a>
+      <a href="#gallery">GALLERY</a>
       <a href="#experiences">EXPERIENCES</a>
       <a href="#projects">PROJECTS</a>
       <!-- <a href="#skills">SKILLS</a> -->
-      <a href="#gallery">GALLERY</a>
       <a href="#contact">CONTACT</a>
       
     </nav>
@@ -206,21 +206,82 @@
             <image class="sketchpad__color" href="assets/portrait-color.jpg" x="0" y="0" width="726" height="912" mask="url(#hover-spot)"/>
           </g>
 
-          <!-- the pencil doing the drawing -->
-          <g class="sketchpad__pencil" aria-hidden="true">
-            <animateMotion class="sketchpad__motion" dur="3.8s" begin="indefinite" fill="freeze"
-              path="M-160 1020 C 40 880, 240 420, 340 140 C 480 130, 255 235, 430 250 C 610 262, 305 368, 470 385 C 640 400, 325 498, 480 520 C 660 545, 345 638, 500 665 C 660 692, 425 778, 560 815 C 640 870, 780 950, 920 1050"/>
-            <g class="sketchpad__pencil-art" transform="rotate(-38) scale(1.25)">
-              <animateTransform attributeName="transform" type="rotate" additive="sum" values="0;-5;3;-4;5;0" dur="0.5s" repeatCount="indefinite"/>
-              <path d="M0 0 L-4.5 -15 L5.5 -14 Z" fill="#1f1913"/>
-              <path d="M-4.5 -15 L5.5 -14 L10 -36 L-10 -35 Z" fill="#d9c8a4" stroke="#2b2418" stroke-width="0.7"/>
-              <rect x="-10" y="-122" width="20" height="87" fill="#c9a15e" stroke="#2b2418" stroke-width="0.8"/>
-              <rect x="-3.5" y="-122" width="7" height="87" fill="#b8904e"/>
-              <rect x="-10" y="-131" width="20" height="9" fill="#9a9a94" stroke="#2b2418" stroke-width="0.7"/>
-              <rect x="-10" y="-146" width="20" height="15" rx="6" fill="#c98f86" stroke="#2b2418" stroke-width="0.7"/>
-            </g>
-          </g>
         </svg>
+      </div>
+    </section>
+
+    <!-- Gallery / Archive -->
+    <section class="section section--archive" id="gallery">
+      <div class="archive archive--line">
+        <svg class="archive__rope" viewBox="0 0 1400 150" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 60 C 100 100, 200 20, 330 60 C 440 95, 540 25, 680 60 C 800 90, 900 30, 1030 62 C 1140 90, 1260 35, 1400 55" fill="none" stroke="rgba(43, 36, 24, 0.5)" stroke-width="2" stroke-linecap="round" filter="url(#charcoal-rough-2)"/>
+        </svg>
+        <p class="line-caption">some of my hand-drawn sketches ✎</p>
+        <!-- floating hand-drawn annotation -->
+        <svg class="archive__arrow" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M6 70 C 30 30, 70 18, 110 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M98 8 L112 13 L101 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- 01 · found photograph -->
+        <figure class="artifact artifact--photo" style="--x:3%; --y:4%; --w:288px; --rot:-1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape" aria-hidden="true"></span>
+            <img src="assets/artwork-1.png" alt="Pen-and-wash drawing of an old stone house on a cobbled village street" class="artifact__img artifact__img--color" style="aspect-ratio:1;" loading="lazy">
+            <figcaption class="artifact__cat">fig. 01 · ink &amp; wash</figcaption>
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="stone house: an ancient warmth"></p>
+        </figure>
+
+        <!-- 02 · pencil drawing -->
+        <figure class="artifact artifact--photo artifact--note-left" style="--x:41%; --y:1%; --w:244px; --rot:1.4deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin" aria-hidden="true"></span>
+            <img src="assets/artwork-2.png" alt="Pencil drawing of a child seated on stone steps below a girl standing in an old doorway framed by climbing vines" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="the child: small wonders, big world"></p>
+        </figure>
+
+        <!-- 03 · pencil drawing -->
+        <figure class="artifact artifact--photo artifact--note-left" style="--x:70%; --y:6%; --w:268px; --rot:-1.2deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape artifact__tape--alt" aria-hidden="true"></span>
+            <img src="assets/artwork-3.png" alt="Pencil drawing of a child in a wide straw hat sitting on a weathered wooden stool, seen from behind" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="daydreaming"></p>
+        </figure>
+
+        <!-- 04 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:6%; --y:52%; --w:238px; --rot:1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin artifact__pin--alt" aria-hidden="true"></span>
+            <img src="assets/artwork-4.png" alt="Pencil drawing of small birds perched on an old vine-wrapped bicycle" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="rust turning into life"></p>
+        </figure>
+
+        <!-- 05 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:64%; --y:50%; --w:300px; --rot:1.2deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__tape" aria-hidden="true"></span>
+            <img src="assets/artwork-5.png" alt="Sketchbook drawing of a curly-haired girl painting at an easel, photographed among yellow flowers" class="artifact__img artifact__img--color" style="aspect-ratio:4/3;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="little painter: capturing what her heart sees"></p>
+        </figure>
+
+        <!-- 06 · pencil drawing -->
+        <figure class="artifact artifact--photo" style="--x:39%; --y:57%; --w:228px; --rot:-1.5deg;" tabindex="0">
+          <div class="artifact__frame">
+            <span class="artifact__pin" aria-hidden="true"></span>
+            <img src="assets/artwork-6.png" alt="Pencil portrait of Dobby the house elf with large ears and wide eyes" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
+          </div>
+          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <p class="artifact__note" data-note="dobby: an unforgettable character"></p>
+        </figure>
       </div>
     </section>
 
@@ -458,84 +519,9 @@
     </section>
     -->
 
-    <!-- Gallery / Archive -->
-    <section class="section section--archive" id="gallery">
-      <p class="section__num">04</p>
-      <h2 class="section__title">Gallery</h2>
-      <p class="gallery__sub">when I am not designing solution, you will find me sketching stories.</p>
-
-      <div class="archive">
-        <!-- floating hand-drawn annotation -->
-        <svg class="archive__arrow" viewBox="0 0 120 80" aria-hidden="true">
-          <path d="M6 70 C 30 30, 70 18, 110 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M98 8 L112 13 L101 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <!-- 01 · found photograph -->
-        <figure class="artifact artifact--photo" style="--x:3%; --y:4%; --w:288px; --rot:-1.5deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__tape" aria-hidden="true"></span>
-            <img src="assets/artwork-1.png" alt="Pen-and-wash drawing of an old stone house on a cobbled village street" class="artifact__img artifact__img--color" style="aspect-ratio:1;" loading="lazy">
-            <figcaption class="artifact__cat">fig. 01 · ink &amp; wash</figcaption>
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="stone house: an ancient warmth"></p>
-        </figure>
-
-        <!-- 02 · pencil drawing -->
-        <figure class="artifact artifact--photo artifact--note-left" style="--x:41%; --y:1%; --w:244px; --rot:1.4deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__pin" aria-hidden="true"></span>
-            <img src="assets/artwork-2.png" alt="Pencil drawing of a child seated on stone steps below a girl standing in an old doorway framed by climbing vines" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="the child: small wonders, big world"></p>
-        </figure>
-
-        <!-- 03 · pencil drawing -->
-        <figure class="artifact artifact--photo artifact--note-left" style="--x:70%; --y:6%; --w:268px; --rot:-1.2deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__tape artifact__tape--alt" aria-hidden="true"></span>
-            <img src="assets/artwork-3.png" alt="Pencil drawing of a child in a wide straw hat sitting on a weathered wooden stool, seen from behind" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="daydreaming"></p>
-        </figure>
-
-        <!-- 04 · pencil drawing -->
-        <figure class="artifact artifact--photo" style="--x:6%; --y:52%; --w:238px; --rot:1.5deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__pin artifact__pin--alt" aria-hidden="true"></span>
-            <img src="assets/artwork-4.png" alt="Pencil drawing of small birds perched on an old vine-wrapped bicycle" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="rust turning into life"></p>
-        </figure>
-
-        <!-- 05 · pencil drawing -->
-        <figure class="artifact artifact--photo" style="--x:64%; --y:50%; --w:300px; --rot:1.2deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__tape" aria-hidden="true"></span>
-            <img src="assets/artwork-5.png" alt="Sketchbook drawing of a curly-haired girl painting at an easel, photographed among yellow flowers" class="artifact__img artifact__img--color" style="aspect-ratio:4/3;" loading="lazy">
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M4 8 C 34 18, 30 52, 84 60" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="little painter: capturing what her heart sees"></p>
-        </figure>
-
-        <!-- 06 · pencil drawing -->
-        <figure class="artifact artifact--photo" style="--x:39%; --y:57%; --w:228px; --rot:-1.5deg;" tabindex="0">
-          <div class="artifact__frame">
-            <span class="artifact__pin" aria-hidden="true"></span>
-            <img src="assets/artwork-6.png" alt="Pencil portrait of Dobby the house elf with large ears and wide eyes" class="artifact__img artifact__img--color" style="aspect-ratio:4/5;" loading="lazy">
-          </div>
-          <svg class="artifact__link" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 10 C 40 22, 36 50, 86 58" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <p class="artifact__note" data-note="dobby: an unforgettable character"></p>
-        </figure>
-      </div>
-    </section>
-
     <!-- Contact -->
     <section class="section section--contact" id="contact">
-      <p class="section__num">05</p>
+      <p class="section__num">03</p>
       <h2 class="section__title">Let&rsquo;s Connect and Collaborate</h2>
       <p class="contact__sub">I am open to ideas, internships &amp; building things that matter</p>
 
@@ -607,6 +593,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/main.js?v=20260716n"></script>
+  <script src="js/main.js?v=20260717j"></script>
 </body>
 </html>
