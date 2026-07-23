@@ -17,7 +17,7 @@
   }
 
   /* ---- Scroll reveal ---- */
-  const sections = document.querySelectorAll(".section");
+  const sections = document.querySelectorAll(".section:not(#gallery)");
 
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(

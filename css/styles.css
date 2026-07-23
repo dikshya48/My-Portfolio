@@ -308,8 +308,7 @@ main {
   justify-content: space-between;
   gap: 1rem;
   padding: calc(1.15rem + env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px)) 1.15rem max(var(--gutter), env(safe-area-inset-left, 0px));
-  max-width: var(--maxw);
-  margin: 0 auto;
+  box-sizing: border-box;
   isolation: isolate;
 }
 
@@ -846,6 +845,7 @@ svg.sketchpad__art {
 /* clean, symmetric 2×2 grid — no tilt, no offset */
 
 .hero__win {
+  --lit: 1;
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -860,7 +860,6 @@ svg.sketchpad__art {
   border: 1px solid color-mix(in srgb, rgba(33, 28, 20, 0.16) calc(var(--lit) * 100%), rgba(236, 228, 211, 0.2));
   border-radius: 8px;
   box-shadow: 0 3px 8px rgba(26, 20, 12, 0.14);
-  animation: win-wave 12s linear infinite;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
 }
 
@@ -879,32 +878,6 @@ svg.sketchpad__art {
   0%, 100% { transform: rotate(0deg); }
   30% { transform: rotate(-12deg); }
   60% { transform: rotate(8deg); }
-}
-
-/* white fills in 1→2→3→4 and holds, then black sweeps 1→2→3→4.
-   Each card is "kicked" by the previous one: it recoils (--rx/--ry) as its
-   colour flips, then lunges (--kx/--ky) into the next card 1.5s later. */
-.hero__win:nth-child(1) { --rx: -6px; --ry: -6px; --kx: 12px; --ky: 0px; }
-.hero__win:nth-child(2) { --rx: 9px; --ry: 0px; --kx: -10px; --ky: 12px; animation-delay: 1.5s; }
-.hero__win:nth-child(3) { --rx: -6px; --ry: 9px; --kx: 12px; --ky: 0px; animation-delay: 3s; }
-/* card 4 closes the loop — it lunges up-left into card 1, whose flip lands
-   exactly 1.5s after card 4's, so the circle never breaks */
-.hero__win:nth-child(4) { --rx: 9px; --ry: 0px; --kx: -10px; --ky: -12px; animation-delay: 4.5s; }
-
-@keyframes win-wave {
-  0% { --lit: 0; translate: 0px 0px; }
-  1.5% { translate: var(--rx, 0px) var(--ry, 0px); }
-  5% { --lit: 1; translate: 0px 0px; }
-  10.5% { translate: 0px 0px; }
-  12.5% { translate: var(--kx, 0px) var(--ky, 0px); }
-  15.5% { translate: 0px 0px; }
-  50% { --lit: 1; translate: 0px 0px; }
-  51.5% { translate: var(--rx, 0px) var(--ry, 0px); }
-  55% { --lit: 0; translate: 0px 0px; }
-  60.5% { translate: 0px 0px; }
-  62.5% { translate: var(--kx, 0px) var(--ky, 0px); }
-  65.5% { translate: 0px 0px; }
-  100% { --lit: 0; translate: 0px 0px; }
 }
 
 .hero__win-medal {
@@ -2565,21 +2538,8 @@ svg.sketchpad__art {
     z-index: 3;
   }
 
-  /* laundry swaying in a light breeze, each at its own pace */
   .archive--line .artifact {
     transform-origin: 50% -12px;
-    animation: art-sway 5.2s ease-in-out infinite alternate;
-  }
-
-  .archive--line .artifact:nth-of-type(2) { animation-duration: 6s; animation-delay: -1.7s; }
-  .archive--line .artifact:nth-of-type(3) { animation-duration: 4.7s; animation-delay: -0.9s; }
-  .archive--line .artifact:nth-of-type(4) { animation-duration: 5.6s; animation-delay: -2.4s; }
-  .archive--line .artifact:nth-of-type(5) { animation-duration: 4.9s; animation-delay: -3.1s; }
-  .archive--line .artifact:nth-of-type(6) { animation-duration: 5.9s; animation-delay: -1.2s; }
-
-  @keyframes art-sway {
-    from { rotate: x -2.4deg; }
-    to { rotate: x 3deg; }
   }
 
   /* wind gust — a swing that ripples outward from wherever you touched,
