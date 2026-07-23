@@ -2611,8 +2611,9 @@ svg.sketchpad__art {
 .hero__social:hover,
 .hero__social:focus-visible {
   transform: translateY(-2px) rotate(-3deg);
-  background-color: transparent;
-  color: #1a140c; /* inverts to outline on hover */
+  background-color: #0a0805;
+  border-color: #0a0805;
+  color: #ece4d3;
 }
 
 /* project cards: pencil outline drawn around the card on hover */
