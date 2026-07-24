@@ -1121,6 +1121,10 @@ svg.sketchpad__art {
   border-top: 1px solid rgba(33, 28, 20, 0.16);
 }
 
+.exp-row:first-child {
+  border-top: none;
+}
+
 /* dotted stem running from the date down to the content, like a timeline tick */
 .exp-row::before {
   content: "";
@@ -2513,9 +2517,9 @@ svg.sketchpad__art {
   pointer-events: none;
   mix-blend-mode: soft-light;
   background:
-    radial-gradient(60% 55% at 42% 46%, rgba(255, 253, 244, 0.7) 0%, rgba(255, 253, 244, 0.28) 52%, transparent 76%),
-    radial-gradient(46% 40% at 63% 58%, rgba(255, 253, 244, 0.45) 0%, transparent 70%),
-    radial-gradient(32% 27% at 34% 66%, rgba(255, 253, 244, 0.35) 0%, transparent 70%);
+    radial-gradient(60% 55% at 42% 46%, rgba(237, 227, 202, 0.55) 0%, rgba(237, 227, 202, 0.2) 52%, transparent 76%),
+    radial-gradient(46% 40% at 63% 58%, rgba(237, 227, 202, 0.35) 0%, transparent 70%),
+    radial-gradient(32% 27% at 34% 66%, rgba(237, 227, 202, 0.25) 0%, transparent 70%);
   filter: blur(7px);
   opacity: 0;
   transition: opacity 0.35s ease;
@@ -2524,7 +2528,7 @@ svg.sketchpad__art {
 }
 
 .cursor-light.is-on {
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 /* hand-sketched border on buttons & skill badges */
