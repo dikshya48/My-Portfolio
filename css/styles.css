@@ -27,7 +27,7 @@
   --fs-section-title: clamp(1.35rem, 0.5rem + 1.9vw, 2.75rem);
   --fs-hero-eyebrow: clamp(0.9375rem, 0.75rem + 0.55vw, 1.5rem);
   --fs-hero-role: clamp(0.9375rem, 0.8rem + 0.5vw, 1.5rem);
-  --fs-hero-skill: clamp(0.625rem, 0.55rem + 0.22vw, 0.875rem);
+  --fs-hero-skill: clamp(0.75rem, 0.65rem + 0.28vw, 1.0625rem);
    
   --fs-hero-win: clamp(0.75rem, 0.7rem + 0.18vw, 1rem);
   --fs-nav-logo: clamp(1.25rem, 0.85rem + 0.85vw, 2.125rem);
@@ -94,7 +94,7 @@ html {
     --fs-section-title: clamp(1.2rem, 0.3rem + 4vw, 1.5rem);
     --fs-hero-eyebrow: clamp(0.8125rem, 0.75rem + 0.35vw, 0.9375rem);
     --fs-hero-role: clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
-    --fs-hero-skill: clamp(0.5625rem, 0.52rem + 0.15vw, 0.6875rem);
+    --fs-hero-skill: clamp(0.6875rem, 0.62rem + 0.2vw, 0.8125rem);
     --fs-hero-win: clamp(0.6875rem, 0.65rem + 0.12vw, 0.8125rem);
     --fs-nav-logo: clamp(1.125rem, 0.5rem + 4vw, 1.35rem);
     --fs-exp-role: clamp(0.9375rem, 0.85rem + 0.5vw, 1.125rem);
@@ -745,7 +745,7 @@ svg.sketchpad__art {
 .hero__skill {
   display: inline-flex;
   align-items: center;
-  padding: 0.38em 0.7em;
+  padding: 0.5em 0.9em;
   font-weight: 500;
   font-size: var(--fs-hero-skill);
   line-height: 1.3;
